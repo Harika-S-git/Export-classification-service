@@ -2,6 +2,7 @@ import os, uuid, json, logging, re, time
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field, model_validator
 from redis import Redis
@@ -53,7 +54,7 @@ async def rate_limit_and_correlation(request: Request, call_next):
 @app.exception_handler(RequestValidationError)
 async def validation_exception(request: Request, exc: RequestValidationError):
     quarantine({'created_at':datetime.now(timezone.utc).isoformat(),'correlation_id':getattr(request.state,'correlation_id','unknown'),'path':request.url.path,'errors':exc.errors()})
-    return Response(json.dumps({'detail':exc.errors(),'quarantined':True}),status_code=422,media_type='application/json')
+    return Response(json.dumps(jsonable_encoder({'detail':exc.errors(),'quarantined':True})),status_code=422,media_type='application/json')
 
 @app.exception_handler(Exception)
 async def generic_exception(request, exc):
