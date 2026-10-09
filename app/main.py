@@ -21,7 +21,7 @@ def quarantine(record: dict):
     QUARANTINE.append(record)
     del QUARANTINE[:-500]
     try:
-        redis_conn.lpush('quarantine', json.dumps(record))
+        redis_conn.lpush('quarantine', json.dumps(jsonable_encoder(record)))
         redis_conn.ltrim('quarantine', 0, 499)
     except Exception:
         pass
