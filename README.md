@@ -60,7 +60,7 @@ Invoke-RestMethod -Uri ("http://localhost:8000" + $job.status_url)
 ## API data contract
 
 - `POST /v1/runs` — JSON `ProductRequest`, responds `202` with `run_id`, `status_url`, queue job ID. Invalid data gets `422` and does not enter the queue.
-- `GET /v1/runs/{run_id}` — queued/running/completed/failed status and final recommendation.
+- `GET /v1/runs/{run_id}` — queued/running/completed/failed status and final recommendation. The public run ID is mapped to the RQ job ID in Redis; completed output is also cached under the public run ID so polling does not depend on the finished job remaining in the queue registry.
 - `POST /v1/feedback` — `{ "run_id": "...", "satisfactory": true, "reason": "..." }`.
 - `GET /v1/feedback/summary` — aggregate feedback.
 - `GET /v1/quarantine/summary` — recent validation/guardrail rejection summary for local coursework evidence.
@@ -88,7 +88,7 @@ The output is a proposed classification only, never permission to file. Do not i
 
 ## Corpus indexing / freshness
 
-The starter reads local text files at run time and exports `export_corpus_chunks`; the corpus README is excluded. For production coursework completion, implement a CLI ingestion pipeline with document hashes, source versions, timestamps, OCR for scanned documents, section/chapter-note metadata, stable chunk IDs, incremental embeddings and Chroma/FAISS persistence. Re-embedding must not require re-parsing unchanged sources.
+The starter reads local text files at run time and exports `export_corpus_chunks`; the corpus README is excluded. Retrieval is lexical token overlap, not semantic/vector retrieval: it can return passages that share common words but do not substantively support the product classification. Citation verification currently checks that cited passage IDs resolve to non-empty indexed text; it does not assess legal authority, passage relevance, entailment, source freshness, or whether every claim is supported. A `verification_passed` value therefore means only that this narrow ID/existence check passed. Manually review source authority, passage relevance, and claim support. For production coursework completion, implement a CLI ingestion pipeline with document hashes, source versions, timestamps, OCR for scanned documents, section/chapter-note metadata, stable chunk IDs, incremental embeddings and Chroma/FAISS persistence.
 
 ## Evaluation
 
@@ -107,7 +107,7 @@ Prometheus scrapes `/metrics`. Add dashboards for end-to-end p50/p95, error rate
 
 ## Tests
 
-For local tests, prefer a clean Python 3.11 virtual environment to avoid conflicts with packages already installed in Anaconda. Install `requirements.txt` and `pytest`, then run `python -m pytest -q`. Tests cover schema contract and deterministic guardrail helper behavior; they do not prove tariff correctness or multi-container behaviour. Also run `docker compose config` and the 10-item live demonstration checklist from the assignment.
+For local tests, prefer a clean Python 3.11 virtual environment to avoid conflicts with packages already installed in Anaconda. Install `requirements.txt` and `pytest`, then run `python -m pytest -q`. Tests cover deterministic guardrails, public-run-ID to queue-job-ID lookup, completed-result retrieval, evaluation retry handling, and honest failure reporting. They do not prove tariff correctness, retrieval quality, or multi-container behaviour. Also run `docker compose config` and the 10-item live demonstration checklist from the assignment.
 
 ## Runbook
 
@@ -138,4 +138,4 @@ Append genuine development incidents with timestamp, observed symptom, reproduct
 ### Load test and batch evaluation helpers
 
 - Install Locust in a test environment (`pip install locust`) and run `locust -f locustfile.py --host http://localhost:8000`. The script submits and polls, so the reported user journey includes final completion. Repeat with one worker and with `docker compose up --build --scale agent-worker=3 -d` and save each report.
-- With the stack running, run `python evals/run_batch.py` from a Python environment with network access to localhost. It writes `evals/latest_results.json`; inspect results and manually label claim support/relevance before reporting quality metrics. This starter does not claim those metrics are computed automatically.
+- With the stack running, run `python evals/run_batch.py` from the repository root in a Python environment with network access to localhost. It keeps the API rate limit enabled, spaces submissions below the default 10/minute limit, retries HTTP 429 and temporary server errors with bounded backoff (honouring `Retry-After`), and records failures without counting them as route matches. It writes all raw scenario results to `evals/latest_results.json` and prints a per-scenario summary. Route match is not legal correctness. Inspect every failure and manually label passage relevance and claim support before reporting groundedness, context relevance, faithfulness, or hallucination rate.
