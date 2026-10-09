@@ -63,7 +63,10 @@ Invoke-RestMethod -Uri ("http://localhost:8000" + $job.status_url)
 - `GET /v1/runs/{run_id}` — queued/running/completed/failed status and final recommendation.
 - `POST /v1/feedback` — `{ "run_id": "...", "satisfactory": true, "reason": "..." }`.
 - `GET /v1/feedback/summary` — aggregate feedback.
+- `GET /v1/quarantine/summary` — recent validation/guardrail rejection summary for local coursework evidence.
 - `GET /health`, `GET /metrics`.
+
+Malformed Pydantic requests are rejected with `422`, their field-level errors are quarantined, and no job is enqueued. Deterministic checks scan free-text description, intended use and materials for a small set of common prompt-injection/threat patterns; these rules are a narrow demonstration, not a complete injection or toxicity detector.
 
 Fields: `description` (8–1000 chars), `materials` (up to 20 strings), optional `intended_use`, `country_of_export` (defaults India), required `destination_country` (must differ from origin), optional non-negative `value_usd` (max 1 billion), optional positive `quantity` (max 1 billion), and `client_id`. Do not send sensitive data.
 
@@ -100,11 +103,11 @@ Compare at least two versioned prompts on the same fixed set, then make one deli
 
 ## Observability / load testing
 
-Prometheus scrapes `/metrics`. Add dashboards for end-to-end p50/p95, error rate, throughput, availability and container resources. Grafana is at port 3000 (`admin` / `.env` password). Declare your target before testing; suggested starting target for the report: **p95 <= 30 seconds from submission to final result at concurrency 5**, justified as an interactive analyst workflow, then measure rather than assuming it is met. Use Locust with a fixed-delay stub instead of a live LLM so results measure the service. Test concurrency steps (1, 5, 10, 20), and compare one worker vs `docker compose up --build --scale agent-worker=3`; report RPS, p50, p95, failure point and bottleneck. This starter does not include a Locust file or a model stub yet, so those remain required coursework work.
+Prometheus scrapes `/metrics`. Add dashboards for end-to-end p50/p95, error rate, throughput, availability and container resources. Grafana is at port 3000 (`admin` / `.env` password). Declare your target before testing; suggested starting target for the report: **p95 <= 30 seconds from submission to final result at concurrency 5**, justified as an interactive analyst workflow, then measure rather than assuming it is met. Use Locust with a fixed-delay stub instead of a live LLM so results measure the service. Test concurrency steps (1, 5, 10, 20), and compare one worker vs `docker compose up --build --scale agent-worker=3`; report RPS, p50, p95, failure point and bottleneck. A Locust journey script is included, but a separate deterministic model-stub service and measured load results remain incomplete.
 
 ## Tests
 
-For local tests, use Python 3.11 and install `requirements.txt`, then `pip install pytest` and run `pytest -q`. The tests cover schema validation only; they do not prove tariff correctness or multi-container behaviour. Also run `docker compose config` and the 10-item live demonstration checklist from the assignment.
+For local tests, prefer a clean Python 3.11 virtual environment to avoid conflicts with packages already installed in Anaconda. Install `requirements.txt` and `pytest`, then run `python -m pytest -q`. Tests cover schema contract and deterministic guardrail helper behavior; they do not prove tariff correctness or multi-container behaviour. Also run `docker compose config` and the 10-item live demonstration checklist from the assignment.
 
 ## Runbook
 
@@ -120,7 +123,7 @@ For local tests, use Python 3.11 and install `requirements.txt`, then `pip insta
 
 ## Incident log
 
-Append genuine development incidents with timestamp, observed symptom, reproduction, root cause, fix and verification. No incident is fabricated in this starter; record the first real failure you encounter while running it.
+Append genuine development incidents with timestamp, observed symptom, reproduction, root cause, fix and verification. `INCIDENT_LOG.md` records the genuine missing-Redis dependency failure seen during local test collection and the verification performed at that time.
 
 ## Known limitations / next steps
 
@@ -128,7 +131,7 @@ Append genuine development incidents with timestamp, observed symptom, reproduct
 - Retrieval is lexical rather than vector-based; integrate Chroma/FAISS and local embeddings.
 - Add provider abstraction, model timeout/retry with exponential backoff, circuit breaker and provider-down demo if an LLM is added.
 - Persist full run traces and per-step cost/tokens; current traces contain tool/query/passage IDs but do not calculate LLM cost.
-- Add OCR, ingestion CLI, Locust + deterministic stub, prompt A/B evaluator, toxicity/input-injection guard and dashboard provisioning.
+- Add OCR, idempotent vector ingestion CLI, separate deterministic model-stub service, prompt A/B evaluator, comprehensive toxicity/injection controls, and dashboard provisioning.
 - Feedback is stored in Redis when available; otherwise in-process fallback is not durable.
 - Rate limiting is an in-memory per-API-process demonstration, not a distributed production limiter.
 
