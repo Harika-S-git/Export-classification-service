@@ -127,7 +127,8 @@ def get_run(run_id: str):
             from rq.job import Job
             job=Job.fetch(str(mapped), connection=redis_conn)
             status=job.get_status(refresh=True)
-            if status == 'finished':
+            status_value=status.value if hasattr(status, 'value') else str(status)
+            if status_value == 'finished':
                 # The worker stores the complete result under the public run ID.
                 cached=redis_conn.get(f'run-result:{run_id}')
                 if cached:
@@ -136,11 +137,11 @@ def get_run(run_id: str):
                 if isinstance(result, dict):
                     return result
                 return {'run_id':run_id,'status':'completed','result':result}
-            if status == 'failed':
+            if status_value == 'failed':
                 return {'run_id':run_id,'status':'failed','recommendation':'specialist-classification-review',
                         'proposed_hs_code':None,'verification_passed':False,
                         'rationale':'The background job failed. No classification is asserted.'}
-            return {'run_id':run_id,'status':str(status)}
+            return {'run_id':run_id,'status':status_value}
     except Exception:
         logger.exception(json.dumps({'event':'run_status_lookup_failed','run_id':run_id}))
 
