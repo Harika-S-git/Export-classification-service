@@ -121,7 +121,7 @@ def run_one(scenario, last_submit_time):
         "latency_seconds": latency,
         "route_match": route_match,
         "verification_passed": bool(out.get("verification_passed", False)),
-        "error": out.get("error") if terminal_status == "failed" else None,
+        "error": (out.get("error") or out.get("error_type") or "Background job failed") if terminal_status == "failed" else None,
         "result": out,
     }
 
