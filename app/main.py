@@ -1,18 +1,29 @@
 import os, uuid, json, logging, re, time
 from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field, model_validator
 from redis import Redis
 from rq import Queue
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from app.core import RUNS, run_classification, REQUESTS, logger
+from app.guardrails import inspect_free_text
 
 logging.basicConfig(level=os.getenv('LOG_LEVEL','INFO'), format='%(message)s')
 app=FastAPI(title='Export Classification Check Service',version='1.0.0',description='Evidence-first proposed tariff classification; human review remains authoritative.')
 redis_conn=Redis.from_url(os.getenv('REDIS_URL','redis://redis:6379/0'),socket_connect_timeout=2,socket_timeout=2)
 queue=Queue('classification',connection=redis_conn,default_timeout=int(os.getenv('RUN_TIMEOUT_SECONDS','90')))
 QUARANTINE=[]; FEEDBACK=[]; RATE={}
+
+def quarantine(record: dict):
+    QUARANTINE.append(record)
+    del QUARANTINE[:-500]
+    try:
+        redis_conn.lpush('quarantine', json.dumps(record))
+        redis_conn.ltrim('quarantine', 0, 499)
+    except Exception:
+        pass
 
 class ProductRequest(BaseModel):
     description: str = Field(min_length=8,max_length=1000)
@@ -39,6 +50,11 @@ async def rate_limit_and_correlation(request: Request, call_next):
         times.append(now); RATE[ip]=times
     response=await call_next(request); response.headers['X-Correlation-ID']=cid; return response
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception(request: Request, exc: RequestValidationError):
+    quarantine({'created_at':datetime.now(timezone.utc).isoformat(),'correlation_id':getattr(request.state,'correlation_id','unknown'),'path':request.url.path,'errors':exc.errors()})
+    return Response(json.dumps({'detail':exc.errors(),'quarantined':True}),status_code=422,media_type='application/json')
+
 @app.exception_handler(Exception)
 async def generic_exception(request, exc):
     logger.exception(json.dumps({'event':'unhandled_exception','correlation_id':getattr(request.state,'correlation_id','unknown')}))
@@ -53,9 +69,25 @@ def health():
 @app.get('/metrics')
 def metrics(): return Response(generate_latest(),media_type=CONTENT_TYPE_LATEST)
 
+@app.get('/v1/quarantine/summary')
+def quarantine_summary():
+    try: count=redis_conn.llen('quarantine')
+    except Exception: count=len(QUARANTINE)
+    return {'count':count,'records':QUARANTINE[-20:]}
+
+
 @app.post('/v1/runs',status_code=202)
 def submit(product: ProductRequest, request: Request):
-    rid=str(uuid.uuid4()); payload=product.model_dump()
+    payload=product.model_dump()
+    flags=[]
+    for field in ('description','intended_use'):
+        flags.extend({'field':field,'flag':flag} for flag in inspect_free_text(payload.get(field)))
+    for index, material in enumerate(payload.get('materials', [])):
+        flags.extend({'field':f'materials[{index}]','flag':flag} for flag in inspect_free_text(material))
+    if flags:
+        quarantine({'created_at':datetime.now(timezone.utc).isoformat(),'correlation_id':request.state.correlation_id,'client_id':payload.get('client_id'),'flags':flags,'decision':'rejected_before_enqueue'})
+        raise HTTPException(422,detail={'message':'Request rejected by input guardrails; no agent run started.','flags':flags,'quarantined':True})
+    rid=str(uuid.uuid4())
     try:
         job=queue.enqueue('app.core.run_classification',payload,rid,job_timeout=int(os.getenv('RUN_TIMEOUT_SECONDS','90')),result_ttl=86400,failure_ttl=86400)
         logger.info(json.dumps({'event':'run_submitted','run_id':rid,'correlation_id':request.state.correlation_id,'job_id':job.id}))
