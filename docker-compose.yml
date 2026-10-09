@@ -1,0 +1,60 @@
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CORPUS_DIR: /srv/corpus
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-10}
+      RUN_TIMEOUT_SECONDS: ${RUN_TIMEOUT_SECONDS:-90}
+    depends_on:
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health',timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  agent-worker:
+    build: .
+    command: ["python","-m","app.worker"]
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CORPUS_DIR: /srv/corpus
+      RUN_TIMEOUT_SECONDS: ${RUN_TIMEOUT_SECONDS:-90}
+    depends_on:
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import redis,os; redis.Redis.from_url(os.getenv('REDIS_URL')).ping()"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server","--appendonly","yes"]
+    volumes: ["redis_data:/data"]
+    healthcheck:
+      test: ["CMD","redis-cli","ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    ports: ["9090:9090"]
+    volumes: ["./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    depends_on: [api]
+    restart: unless-stopped
+  grafana:
+    image: grafana/grafana:11.1.0
+    ports: ["3000:3000"]
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-change-me}
+    volumes: ["grafana_data:/var/lib/grafana"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+volumes:
+  redis_data:
+  grafana_data:

@@ -1,0 +1,22 @@
+[
+ {"id":"S01","description":"Stainless steel vacuum flask with a moulded plastic outer body","expected_route":"specialist-classification-review","expected_code":null,"reason":"Reference difficult case; must retrieve named-article heading and apply GRI in order before any code is returned; official source corpus must be supplied."},
+ {"id":"S02","description":"Iron or steel tube fitting for industrial plumbing","expected_route":"specialist-classification-review","expected_code":null,"reason":"Chapter 73 may be relevant; verify heading and chapter notes."},
+ {"id":"S03","description":"Decorative iron article for indoor display","expected_route":"specialist-classification-review","expected_code":null,"reason":"Insufficient detail and competing headings possible."},
+ {"id":"S04","description":"Stainless steel kitchen utensil","expected_route":"specialist-classification-review","expected_code":null,"reason":"Article heading must be considered before material heading."},
+ {"id":"S05","description":"Plastic household storage box","expected_route":"specialist-classification-review","expected_code":null,"reason":"Likely outside supported chapter scope; no unsupported code."},
+ {"id":"S06","description":"Steel chain for lifting equipment","expected_route":"specialist-classification-review","expected_code":null,"reason":"Verify article-specific tariff heading and notes."},
+ {"id":"S07","description":"Steel fasteners for machinery","expected_route":"specialist-classification-review","expected_code":null,"reason":"Competing article headings need review."},
+ {"id":"S08","description":"Aluminium beverage bottle","expected_route":"specialist-classification-review","expected_code":null,"reason":"Outside supplied chapter scope unless tariff evidence shows otherwise."},
+ {"id":"S09","description":"Plastic comb for personal grooming","expected_route":"specialist-classification-review","expected_code":null,"reason":"Chapter 96 may be relevant; verify official heading and notes."},
+ {"id":"S10","description":"Broom with plastic handle","expected_route":"specialist-classification-review","expected_code":null,"reason":"Article-specific heading may override material similarity."},
+ {"id":"S11","description":"Steel padlock for storage locker","expected_route":"specialist-classification-review","expected_code":null,"reason":"Chapter 73 may not be correct simply because steel is present."},
+ {"id":"S12","description":"Plastic hairbrush for export","expected_route":"specialist-classification-review","expected_code":null,"reason":"Chapter 96 candidate; official evidence needed."},
+ {"id":"S13","description":"Steel wire mesh for construction","expected_route":"specialist-classification-review","expected_code":null,"reason":"Check product form and relevant notes."},
+ {"id":"S14","description":"Iron cast article with unknown intended use","expected_route":"seek-product-clarification","expected_code":null,"reason":"Product description is not specific enough to classify safely."},
+ {"id":"S15","description":"Unspecified manufactured item","expected_route":"seek-product-clarification","expected_code":null,"reason":"Missing article identity and materials."},
+ {"id":"S16","description":"Steel article for an unknown purpose","expected_route":"specialist-classification-review","expected_code":null,"reason":"Insufficient article-level evidence; don't classify by material alone."},
+ {"id":"S17","description":"Plastic writing instrument","expected_route":"specialist-classification-review","expected_code":null,"reason":"Chapter 96 candidate; verify precise heading."},
+ {"id":"S18","description":"Steel screws for timber construction","expected_route":"specialist-classification-review","expected_code":null,"reason":"Article-specific heading and notes required."},
+ {"id":"S19","description":"Stainless steel thermos with a plastic shell","expected_route":"specialist-classification-review","expected_code":null,"reason":"Named-article retrieval is mandatory; no unsupported code."},
+ {"id":"S20","description":"Iron or steel household article with mixed materials","expected_route":"specialist-classification-review","expected_code":null,"reason":"Apply GRI and relevant notes; escalate if unresolved."}
+]
