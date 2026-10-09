@@ -47,7 +47,10 @@ async def rate_limit_and_correlation(request: Request, call_next):
     cid=request.headers.get('X-Correlation-ID') or str(uuid.uuid4()); request.state.correlation_id=cid
     if request.url.path.startswith('/v1/runs') and request.method=='POST':
         ip=request.client.host if request.client else 'unknown'; now=time.time(); times=[t for t in RATE.get(ip,[]) if now-t<60]
-        if len(times)>=int(os.getenv('RATE_LIMIT_PER_MINUTE','10')): return Response('Rate limit exceeded',status_code=429)
+        limit=max(1,int(os.getenv('RATE_LIMIT_PER_MINUTE','10')))
+        if len(times)>=limit:
+            retry_after=max(1,int(60-(now-min(times)))) if times else 1
+            return Response('Rate limit exceeded',status_code=429,headers={'Retry-After':str(retry_after)})
         times.append(now); RATE[ip]=times
     response=await call_next(request); response.headers['X-Correlation-ID']=cid; return response
 
@@ -91,6 +94,11 @@ def submit(product: ProductRequest, request: Request):
     rid=str(uuid.uuid4())
     try:
         job=queue.enqueue('app.core.run_classification',payload,rid,job_timeout=int(os.getenv('RUN_TIMEOUT_SECONDS','90')),result_ttl=86400,failure_ttl=86400)
+        # Persist the public run ID mapping independently of the RQ job registry.
+        # RQ may expire finished jobs from its registry before clients stop polling.
+        redis_conn.setex(f'run-job:{rid}', 86400, job.id)
+        job.meta['public_run_id']=rid
+        job.save_meta()
         logger.info(json.dumps({'event':'run_submitted','run_id':rid,'correlation_id':request.state.correlation_id,'job_id':job.id}))
         return {'run_id':rid,'status_url':f'/v1/runs/{rid}','queue_job_id':job.id,'status':'queued'}
     except Exception as exc:
@@ -99,25 +107,59 @@ def submit(product: ProductRequest, request: Request):
 
 @app.get('/v1/runs/{run_id}')
 def get_run(run_id: str):
-    if run_id in RUNS: return RUNS[run_id]
+    # In-process cache is useful in tests and single-process deployments.
+    if run_id in RUNS:
+        return RUNS[run_id]
     try:
         cached=redis_conn.get(f'run-result:{run_id}')
-        if cached: return json.loads(cached)
-    except Exception: pass
-    try:
-        from rq.job import Job
-        job=Job.fetch(run_id,connection=redis_conn) # run_id is not the queue job id; status endpoint below scans by meta if configured
-        return {'run_id':run_id,'status':job.get_status()}
+        if cached:
+            return json.loads(cached)
     except Exception:
-        # Search queue registry by job args so the public run id stays stable.
-        try:
-            for job in queue.get_jobs():
-                if len(job.args)>1 and job.args[1]==run_id:
-                    if job.is_finished and job.result: return job.result
-                    return {'run_id':run_id,'status':job.get_status()}
-        except Exception: pass
-        raise HTTPException(404,'Run not found')
+        logger.exception('Could not read cached run result')
 
+    # Public run IDs are intentionally distinct from RQ job IDs. Resolve the
+    # durable mapping first; never assume Job.fetch(run_id) is correct.
+    try:
+        mapped=redis_conn.get(f'run-job:{run_id}')
+        if isinstance(mapped, bytes):
+            mapped=mapped.decode('utf-8')
+        if mapped:
+            from rq.job import Job
+            job=Job.fetch(str(mapped), connection=redis_conn)
+            status=job.get_status(refresh=True)
+            if status == 'finished':
+                # The worker stores the complete result under the public run ID.
+                cached=redis_conn.get(f'run-result:{run_id}')
+                if cached:
+                    return json.loads(cached)
+                result=job.result
+                if isinstance(result, dict):
+                    return result
+                return {'run_id':run_id,'status':'completed','result':result}
+            if status == 'failed':
+                return {'run_id':run_id,'status':'failed','recommendation':'specialist-classification-review',
+                        'proposed_hs_code':None,'verification_passed':False,
+                        'rationale':'The background job failed. No classification is asserted.'}
+            return {'run_id':run_id,'status':str(status)}
+    except Exception:
+        logger.exception(json.dumps({'event':'run_status_lookup_failed','run_id':run_id}))
+
+    # Compatibility fallback for runs submitted before the mapping was added.
+    try:
+        for job in queue.get_jobs():
+            if len(job.args)>1 and job.args[1]==run_id:
+                if job.is_finished:
+                    cached=redis_conn.get(f'run-result:{run_id}')
+                    if cached:
+                        return json.loads(cached)
+                    if isinstance(job.result, dict):
+                        return job.result
+                return {'run_id':run_id,'status':str(job.get_status())}
+    except Exception:
+        logger.exception('Legacy run lookup failed')
+
+    # A mapping/result can be temporarily unavailable during worker startup.
+    raise HTTPException(404,'Run not found')
 @app.post('/v1/feedback')
 def feedback(body: dict):
     rid=body.get('run_id'); satisfactory=body.get('satisfactory'); reason=str(body.get('reason',''))[:1000]
