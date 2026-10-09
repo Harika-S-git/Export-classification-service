@@ -53,3 +53,23 @@ def test_unknown_run_returns_404(monkeypatch):
     with pytest.raises(HTTPException) as exc:
         main.get_run("unknown-run")
     assert exc.value.status_code == 404
+
+
+def test_finished_rq_enum_returns_job_result_when_cache_is_missing(monkeypatch):
+    from enum import Enum
+    from rq import job as rq_job
+
+    class Status(Enum):
+        FINISHED = "finished"
+
+    expected = {"run_id": "public-run", "status": "completed", "recommendation": "specialist-classification-review"}
+    fake_redis = FakeRedis({"run-job:public-run": b"rq-job-123"})
+    fake_job = Mock()
+    fake_job.get_status.return_value = Status.FINISHED
+    fake_job.result = expected
+    monkeypatch.setattr(main, "redis_conn", fake_redis)
+    monkeypatch.setattr(main, "RUNS", {})
+    monkeypatch.setattr(main, "queue", Mock(get_jobs=Mock(return_value=[])))
+    monkeypatch.setattr(rq_job.Job, "fetch", Mock(return_value=fake_job))
+
+    assert main.get_run("public-run") == expected
