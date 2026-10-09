@@ -28,7 +28,14 @@ def test_request_json_retries_429_and_honors_retry_after(monkeypatch):
     )
     responses = iter([rate_limited, FakeResponse({"ok": True})])
     sleeps = []
-    monkeypatch.setattr(run_batch.urllib.request, "urlopen", lambda *a, **k: next(responses))
+
+    def fake_urlopen(*args, **kwargs):
+        response = next(responses)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    monkeypatch.setattr(run_batch.urllib.request, "urlopen", fake_urlopen)
     monkeypatch.setattr(run_batch.time, "sleep", sleeps.append)
 
     assert run_batch.request_json("http://localhost:8000/v1/runs", retries=1) == {"ok": True}
