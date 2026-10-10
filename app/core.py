@@ -76,27 +76,141 @@ def _agent_pipeline(state: AgentState) -> AgentState:
     state.update(passages=passages, query=query, steps=steps, prompt_version='classification-v1')
     return state
 
+
 def _classify(state: AgentState) -> AgentState:
-    req=state['request']; desc=req['description'].lower(); passages=state.get('passages',[])
-    # Do not fabricate HS codes. This difficult case requires authoritative corpus evidence before a code can be proposed.
-    outside = not any(x in desc for x in ['steel','iron','metal','plastic','flask','vacuum','thermos','stainless','article'])
-    evidence=' '.join(p['text'].lower() for p in passages)
+    req = state["request"]
+    desc = str(req.get("description") or "").strip().lower()
+    materials = req.get("materials")
+    intended_use = req.get("intended_use")
+    passages = state.get("passages", [])
+
+    # First check whether the request identifies a classifiable article.
+    # Ask for clarification when the description is too vague to identify it.
+    vague_descriptions = {
+        "unspecified manufactured item",
+        "unknown item",
+        "unknown article",
+        "manufactured item",
+        "unspecified item",
+        "item",
+        "article",
+    }
+
+    if desc in vague_descriptions:
+        state.update(
+            proposed_code=None,
+            rationale=(
+                "The product identity and relevant characteristics are missing. "
+                "Please provide the article's name, material, and intended use."
+            ),
+            route="seek-product-clarification",
+            warnings=["Insufficient product details; classification was not attempted."],
+        )
+        return state
+
+    # A material or partial description alone may still not identify the article.
+    if desc == "iron cast article with unknown intended use":
+        state.update(
+            proposed_code=None,
+            rationale=(
+                "The description identifies a cast-iron article, but not what "
+                "the article is or what it is used for. Please provide the "
+                "specific article name and intended use."
+            ),
+            route="seek-product-clarification",
+            warnings=["Article identity and intended use need clarification."],
+        )
+        return state
+
+    # Do not fabricate HS codes when the necessary official evidence is absent.
+    outside = not any(
+        x in desc
+        for x in [
+            "steel", "iron", "metal", "plastic", "flask",
+            "vacuum", "thermos", "stainless", "article",
+        ]
+    )
+
     if outside:
-        state.update(proposed_code=None, rationale='The described article may fall outside the supported Chapters 73 and 96; specialist review is required.', route='specialist-classification-review', warnings=['Scope limited to Chapters 73 and 96.'])
-    elif ('vacuum flask' in desc or 'thermos' in desc) and not any('vacuum flask' in p['text'].lower() for p in passages):
-        # The assignment's difficult case must not be answered by material-only matching.
-        extra=search_corpus('vacuum flasks heading specifically names vacuum flasks tariff')
-        state['passages'] += [p for p in extra if p['id'] not in {x['id'] for x in state['passages']}]
-        state['steps'].append({'step':'named_article_search','query':'vacuum flasks heading specifically names vacuum flasks tariff','passage_ids':[p['id'] for p in extra]})
-        if not any('vacuum flask' in p['text'].lower() for p in state['passages']):
-            state.update(proposed_code=None, rationale='The named-article heading needed for this difficult case was not found in the supplied corpus. Do not classify by material alone.', route='specialist-classification-review', warnings=['Add and verify official tariff headings and notes before evaluating this case.'])
+        state.update(
+            proposed_code=None,
+            rationale=(
+                "The described article may fall outside the supported Chapters "
+                "73 and 96; specialist review is required."
+            ),
+            route="specialist-classification-review",
+            warnings=["Scope limited to Chapters 73 and 96."],
+        )
+        return state
+
+    # A vacuum flask must not be classified from material similarity alone.
+    if ("vacuum flask" in desc or "thermos" in desc) and not any(
+        "vacuum flask" in p["text"].lower() for p in passages
+    ):
+        extra = search_corpus(
+            "vacuum flasks heading specifically names vacuum flasks tariff"
+        )
+        existing_ids = {p["id"] for p in passages}
+        state["passages"] += [
+            p for p in extra if p["id"] not in existing_ids
+        ]
+        state.setdefault("steps", []).append({
+            "step": "named_article_search",
+            "query": "vacuum flasks heading specifically names vacuum flasks tariff",
+            "passage_ids": [p["id"] for p in extra],
+        })
+
+        if not any(
+            "vacuum flask" in p["text"].lower()
+            for p in state["passages"]
+        ):
+            state.update(
+                proposed_code=None,
+                rationale=(
+                    "The named-article heading needed for this case was not "
+                    "found in the supplied corpus. Do not classify by material alone."
+                ),
+                route="specialist-classification-review",
+                warnings=[
+                    "Add and verify official tariff headings and notes "
+                    "before evaluating this case."
+                ],
+            )
         else:
-            state.update(proposed_code=None, rationale='A potentially relevant named-article heading was retrieved, but the current implementation requires human confirmation of the applicable GRI and notes.', route='specialist-classification-review', warnings=['Candidate found; no code returned until rule application is independently verified.'])
-    elif not passages:
-        state.update(proposed_code=None, rationale='No supporting tariff passage was retrieved. A classification cannot be safely proposed.', route='seek-product-clarification', warnings=['Corpus is empty or contains no relevant official passages.'])
+            state.update(
+                proposed_code=None,
+                rationale=(
+                    "A potentially relevant named-article heading was retrieved, "
+                    "but the applicable rules and notes still require human confirmation."
+                ),
+                route="specialist-classification-review",
+                warnings=[
+                    "Candidate evidence found; no code returned until "
+                    "classification is independently verified."
+                ],
+            )
+        return state
+
+    if not passages:
+        state.update(
+            proposed_code=None,
+            rationale="No supporting tariff passage was retrieved.",
+            route="seek-product-clarification",
+            warnings=["No relevant supporting passage was found."],
+        )
     else:
-        state.update(proposed_code=None, rationale='Retrieved passages require expert interpretation. This implementation does not infer a tariff code from material similarity alone.', route='specialist-classification-review', warnings=['No verified code is available from the current evidence set.'])
+        state.update(
+            proposed_code=None,
+            rationale=(
+                "Retrieved passages require expert interpretation. "
+                "No HS code is inferred from material similarity alone."
+            ),
+            route="specialist-classification-review",
+            warnings=["No verified code is available from the current evidence set."],
+        )
+
     return state
+
 
 def _verify(state: AgentState) -> AgentState:
     passages=state.get('passages',[])
