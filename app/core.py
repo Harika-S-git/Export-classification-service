@@ -212,18 +212,118 @@ def _classify(state: AgentState) -> AgentState:
     return state
 
 
+_EVIDENCE_STOPWORDS = {
+    'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and',
+    'any', 'are', 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below',
+    'between', 'both', 'but', 'by', 'can', 'could', 'did', 'do', 'does', 'doing',
+    'down', 'during', 'each', 'few', 'for', 'from', 'further', 'had', 'has', 'have',
+    'having', 'he', 'her', 'here', 'hers', 'herself', 'him', 'himself', 'his', 'how',
+    'i', 'if', 'in', 'into', 'is', 'it', 'its', 'itself', 'just', 'me', 'more',
+    'most', 'my', 'myself', 'no', 'nor', 'not', 'now', 'of', 'off', 'on', 'once',
+    'only', 'or', 'other', 'our', 'ours', 'ourselves', 'out', 'over', 'own', 'same',
+    'she', 'should', 'so', 'some', 'such', 'than', 'that', 'the', 'their', 'theirs',
+    'them', 'themselves', 'then', 'there', 'these', 'they', 'this', 'those',
+    'through', 'to', 'too', 'under', 'until', 'up', 'very', 'was', 'we', 'were',
+    'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with',
+    'would', 'you', 'your', 'yours', 'yourself', 'yourselves',
+}
+
+
+def _assess_evidence_relevance(request: dict, passages: list) -> dict:
+    """Assess lexical overlap only; it is not proof of semantic or legal classification support."""
+    request_text = ' '.join(
+        str(request.get(field) or '')
+        for field in ('description', 'materials', 'intended_use')
+    )
+    requested_terms = {
+        term for term in re.findall(r'[a-z0-9]+', request_text.lower())
+        if len(term) >= 3 and term not in _EVIDENCE_STOPWORDS
+    }
+    if not requested_terms:
+        return {
+            'passed': False,
+            'requested_terms': [],
+            'matched_terms': [],
+            'relevant_passage_ids': [],
+        }
+
+    minimum_matches = 1 if len(requested_terms) == 1 else 2
+    matched_terms = set()
+    relevant_passage_ids = []
+    for passage in passages:
+        passage_terms = {
+            term for term in re.findall(r'[a-z0-9]+', str(passage.get('text') or '').lower())
+            if len(term) >= 3 and term not in _EVIDENCE_STOPWORDS
+        }
+        overlap = requested_terms & passage_terms
+        if len(overlap) >= minimum_matches:
+            matched_terms.update(overlap)
+            relevant_passage_ids.append(passage['id'])
+
+    return {
+        'passed': bool(relevant_passage_ids),
+        'requested_terms': sorted(requested_terms),
+        'matched_terms': sorted(matched_terms),
+        'relevant_passage_ids': relevant_passage_ids,
+    }
+
+
 def _verify(state: AgentState) -> AgentState:
-    passages=state.get('passages',[])
-    valid_ids={p['id'] for p in load_passages()}
-    citations=[p['id'] for p in passages if p['id'] in valid_ids]
+    passages = state.get('passages', [])
+    canonical_passages = {p['id']: p for p in load_passages()}
+    citations = [p['id'] for p in passages if p['id'] in canonical_passages]
     # Strict fail-closed policy: citations must resolve to indexed text; never return an unsupported code.
-    verified=bool(citations) and all(any(p['id']==cid and p['text'].strip() for p in passages) for cid in citations)
-    if not verified:
-        state.update(proposed_code=None, route='specialist-classification-review', rationale='Verification failed: no citation resolved to retrieved corpus text.', warnings=state.get('warnings',[])+['Verification failed; fail-closed escalation applied.'])
+    citation_resolution_passed = bool(citations) and all(
+        any(p['id'] == cid and p['text'].strip() for p in passages)
+        for cid in citations
+    )
+    relevant_passages = [
+        canonical_passages[cid]
+        for cid in citations
+        if cid in canonical_passages and canonical_passages[cid]['text'].strip()
+    ]
+    evidence_relevance = _assess_evidence_relevance(
+        state.get('request', {}),
+        relevant_passages,
+    )
+    evidence_relevance_passed = evidence_relevance['passed']
+    verified = citation_resolution_passed and evidence_relevance_passed
+
+    if not citation_resolution_passed:
+        state.update(
+            proposed_code=None,
+            route='specialist-classification-review',
+            rationale='Verification failed: no citation resolved to retrieved corpus text.',
+            warnings=state.get('warnings', []) + [
+                'Verification failed; fail-closed escalation applied.'
+            ],
+        )
+    elif state.get('proposed_code') and not evidence_relevance_passed:
+        state.update(
+            proposed_code=None,
+            route='specialist-classification-review',
+            warnings=state.get('warnings', []) + [
+                'Evidence relevance check failed; proposed code cleared and specialist review required.'
+            ],
+        )
+
     if state.get('proposed_code') and not verified:
         state['proposed_code']=None
-    state.update(verified=verified, citations=citations, prompt_version=state.get('prompt_version','classification-v1'))
-    state.setdefault('steps',[]).append({'step':'verification','verified':verified,'citation_ids':citations})
+    state.update(
+        verified=verified,
+        citations=citations,
+        citation_resolution_passed=citation_resolution_passed,
+        evidence_relevance_passed=evidence_relevance_passed,
+        evidence_relevance_result=evidence_relevance,
+        prompt_version=state.get('prompt_version', 'classification-v1'),
+    )
+    state.setdefault('steps', []).append({
+        'step': 'verification',
+        'verified': verified,
+        'citation_ids': citations,
+        'citation_resolution_passed': citation_resolution_passed,
+        'evidence_relevance_passed': evidence_relevance_passed,
+    })
     return state
 
 def run_classification(request: dict, run_id: str):
