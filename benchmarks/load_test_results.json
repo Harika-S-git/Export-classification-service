@@ -1,0 +1,464 @@
+{
+  "target_url": "http://localhost:8001",
+  "timestamp": 1791831781.0919554,
+  "timestamp_utc": "2026-10-12T19:03:01.091955+00:00",
+  "sample_note": "Bounded student-project benchmark samples; results are not a production capacity guarantee.",
+  "workload": {
+    "read_requests_per_concurrency": 20,
+    "read_concurrency_levels": [
+      1,
+      3
+    ],
+    "submission_requests": 6,
+    "submission_concurrency": 2,
+    "e2e_jobs": [
+      {
+        "concurrency": 1,
+        "jobs": 3
+      },
+      {
+        "concurrency": 2,
+        "jobs": 4
+      }
+    ],
+    "rate_limit_cooldown_seconds": 61.0,
+    "rate_limit_note": "The submission benchmark is limited to six requests. In all mode, a cooldown precedes the separate seven-job E2E phase."
+  },
+  "runs": {
+    "read_benchmark": [
+      {
+        "endpoint": "/health",
+        "concurrency": 1,
+        "total_requests": 20,
+        "wall_duration_seconds": 0.2424,
+        "rps": 82.52,
+        "p50_latency_ms": 7.63,
+        "p95_latency_ms": 29.82,
+        "p99_latency_ms": 30.2,
+        "status_counts": {
+          "200": 20
+        },
+        "error_count": 0,
+        "error_rate": 0.0
+      },
+      {
+        "endpoint": "/health",
+        "concurrency": 3,
+        "total_requests": 20,
+        "wall_duration_seconds": 0.0869,
+        "rps": 230.19,
+        "p50_latency_ms": 9.07,
+        "p95_latency_ms": 23.28,
+        "p99_latency_ms": 23.32,
+        "status_counts": {
+          "200": 20
+        },
+        "error_count": 0,
+        "error_rate": 0.0
+      }
+    ],
+    "submission_benchmark": {
+      "concurrency": 2,
+      "total_requests": 6,
+      "accepted_202_count": 6,
+      "wall_duration_seconds": 0.0637,
+      "submission_rps": 94.26,
+      "submission_p50_ms": 20.02,
+      "submission_p95_ms": 34.36,
+      "submission_p99_ms": 34.36,
+      "status_counts": {
+        "202": 6
+      },
+      "error_count": 0,
+      "error_rate": 0.0,
+      "run_ids": [
+        "a2a33440-b306-440a-8de5-ea30e12e6f59",
+        "4227afee-11b8-4fdc-8127-cc7c218b34b7",
+        "b1a734bd-ee4f-40b0-aaf5-77fb69d8da83",
+        "7f452fe4-63a4-4019-bd64-c39612b02d02",
+        "c0b78889-c08a-4b3e-87b6-9a718404a90f",
+        "a9dc623d-7b9d-4099-b8aa-152ac30a14f1"
+      ]
+    },
+    "e2e_benchmark": [
+      {
+        "concurrency": 1,
+        "total_jobs": 3,
+        "successful_jobs": 3,
+        "wall_duration_seconds": 3.2149,
+        "throughput_jobs_per_sec": 0.93,
+        "submit_latency_median_ms": 32.24,
+        "e2e_median_seconds": 1.051,
+        "e2e_p95_seconds": 1.06,
+        "worker_median_seconds": 0.8243,
+        "queue_wait_median_seconds": 0.203,
+        "error_count": 0,
+        "job_details": [
+          {
+            "success": true,
+            "run_id": "adddf8a4-f34a-48a3-90b0-75f5ce0902d8",
+            "status": "completed",
+            "submit_latency": 0.03224620000037248,
+            "poll_count": 3,
+            "e2e_duration": 1.0508554999978514,
+            "worker_duration": 0.878,
+            "queue_wait_estimate": 0.17285549999785144,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "94f69ff0-b375-4065-9750-8d6d38453981",
+            "status": "completed",
+            "submit_latency": 0.011329099997965386,
+            "poll_count": 3,
+            "e2e_duration": 1.0597987000001012,
+            "worker_duration": 0.8134,
+            "queue_wait_estimate": 0.24639870000010122,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "9b25f2d7-7147-412d-be5e-f86cc73332d4",
+            "status": "completed",
+            "submit_latency": 0.03223870000147144,
+            "poll_count": 3,
+            "e2e_duration": 1.0272087999983341,
+            "worker_duration": 0.8243,
+            "queue_wait_estimate": 0.2029087999983341,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          }
+        ]
+      },
+      {
+        "concurrency": 2,
+        "total_jobs": 4,
+        "successful_jobs": 4,
+        "wall_duration_seconds": 4.1916,
+        "throughput_jobs_per_sec": 0.95,
+        "submit_latency_median_ms": 11.99,
+        "e2e_median_seconds": 1.568,
+        "e2e_p95_seconds": 2.605,
+        "worker_median_seconds": 0.8254,
+        "queue_wait_median_seconds": 0.728,
+        "error_count": 0,
+        "job_details": [
+          {
+            "success": true,
+            "run_id": "026396d5-ceaf-4b37-bc53-a5d62f0f3cfb",
+            "status": "completed",
+            "submit_latency": 0.031057899999723304,
+            "poll_count": 6,
+            "e2e_duration": 2.6045158000015363,
+            "worker_duration": 0.7863,
+            "queue_wait_estimate": 1.8182158000015363,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "8f284c2f-3035-49a8-997d-e6ac64a25550",
+            "status": "completed",
+            "submit_latency": 0.009767100000317441,
+            "poll_count": 4,
+            "e2e_duration": 1.574197899997671,
+            "worker_duration": 1.04,
+            "queue_wait_estimate": 0.5341978999976709,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "0047843a-b82a-4bff-85ff-c4008c70f780",
+            "status": "completed",
+            "submit_latency": 0.012820299998566043,
+            "poll_count": 4,
+            "e2e_duration": 1.5623086000014155,
+            "worker_duration": 0.7986,
+            "queue_wait_estimate": 0.7637086000014155,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "ceaeffde-51b5-4eb2-84f8-5b478187e36e",
+            "status": "completed",
+            "submit_latency": 0.01115869999921415,
+            "poll_count": 4,
+            "e2e_duration": 1.5437573999988672,
+            "worker_duration": 0.8521,
+            "queue_wait_estimate": 0.6916573999988672,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          }
+        ]
+      }
+    ]
+  },
+  "previous_e2e_benchmark": {
+    "timestamp": 1791830993.531707,
+    "runs": [
+      {
+        "concurrency": 1,
+        "total_jobs": 3,
+        "successful_jobs": 3,
+        "wall_duration_seconds": 4.7796,
+        "throughput_jobs_per_sec": 0.63,
+        "submit_latency_median_ms": 31.2,
+        "e2e_median_seconds": 1.563,
+        "e2e_p95_seconds": 1.575,
+        "worker_median_seconds": 0.9829,
+        "queue_wait_median_seconds": 0.579,
+        "error_count": 0,
+        "job_details": [
+          {
+            "success": true,
+            "run_id": "e9a724b3-8155-4e47-826c-f0b56cca3297",
+            "status": "completed",
+            "submit_latency": 0.03120209999906365,
+            "poll_count": 4,
+            "e2e_duration": 1.5623565000023518,
+            "worker_duration": 0.9829,
+            "queue_wait_estimate": 0.5794565000023518,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "41c8d3c3-394b-4c09-b74f-16b766b4a1e6",
+            "status": "completed",
+            "submit_latency": 0.012721900002361508,
+            "poll_count": 4,
+            "e2e_duration": 1.5745362999987265,
+            "worker_duration": 1.0193,
+            "queue_wait_estimate": 0.5552362999987264,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "c1206264-58c9-4e9b-a96d-8a491c51df44",
+            "status": "completed",
+            "submit_latency": 0.03397410000252421,
+            "poll_count": 4,
+            "e2e_duration": 1.5634237000012945,
+            "worker_duration": 0.9693,
+            "queue_wait_estimate": 0.5941237000012944,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          }
+        ]
+      },
+      {
+        "concurrency": 2,
+        "total_jobs": 4,
+        "successful_jobs": 4,
+        "wall_duration_seconds": 4.1819,
+        "throughput_jobs_per_sec": 0.96,
+        "submit_latency_median_ms": 12.4,
+        "e2e_median_seconds": 2.061,
+        "e2e_p95_seconds": 2.105,
+        "worker_median_seconds": 0.8171,
+        "queue_wait_median_seconds": 1.223,
+        "error_count": 0,
+        "job_details": [
+          {
+            "success": true,
+            "run_id": "d2c55bed-df92-4a08-86b2-495d7fe7d89f",
+            "status": "completed",
+            "submit_latency": 0.014201099998899736,
+            "poll_count": 3,
+            "e2e_duration": 1.0445576000020083,
+            "worker_duration": 0.8034,
+            "queue_wait_estimate": 0.24115760000200825,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "e8129771-70d2-4060-b4cf-8e1e590a504e",
+            "status": "completed",
+            "submit_latency": 0.014670600001409184,
+            "poll_count": 5,
+            "e2e_duration": 2.051716599999054,
+            "worker_duration": 0.8307,
+            "queue_wait_estimate": 1.2210165999990539,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "66aa607f-4c5b-477c-abca-697765c744f0",
+            "status": "completed",
+            "submit_latency": 0.010601899997709552,
+            "poll_count": 5,
+            "e2e_duration": 2.0708582999977807,
+            "worker_duration": 0.7979,
+            "queue_wait_estimate": 1.2729582999977807,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          },
+          {
+            "success": true,
+            "run_id": "e69fb428-e25e-4475-b589-6b22f6efeebe",
+            "status": "completed",
+            "submit_latency": 0.009694399999716552,
+            "poll_count": 5,
+            "e2e_duration": 2.1045965000012075,
+            "worker_duration": 0.8795,
+            "queue_wait_estimate": 1.2250965000012075,
+            "recommendation": "specialist-classification-review",
+            "verification_passed": false
+          }
+        ]
+      }
+    ]
+  },
+  "previous_e2e_benchmark_history": [
+    {
+      "timestamp": 1791829725.9713948,
+      "runs": [
+        {
+          "concurrency": 1,
+          "total_jobs": 3,
+          "successful_jobs": 3,
+          "wall_duration_seconds": 3.22,
+          "throughput_jobs_per_sec": 0.93,
+          "submit_latency_median_ms": 18.35,
+          "e2e_median_seconds": 1.047,
+          "e2e_p95_seconds": 1.072,
+          "worker_median_seconds": 0.8282,
+          "queue_wait_median_seconds": 0.211,
+          "error_count": 0,
+          "job_details": [
+            {
+              "success": true,
+              "run_id": "acfc4727-e015-4d88-a38d-099d2c8b9f88",
+              "status": "completed",
+              "submit_latency": 0.022054199998819968,
+              "poll_count": 3,
+              "e2e_duration": 1.04722319999928,
+              "worker_duration": 0.8908,
+              "queue_wait_estimate": 0.15642319999928,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "1e869971-2f75-4cdb-a80d-a419a6dbb932",
+              "status": "completed",
+              "submit_latency": 0.011027400003513321,
+              "poll_count": 3,
+              "e2e_duration": 1.0392957000003662,
+              "worker_duration": 0.8282,
+              "queue_wait_estimate": 0.21109570000036615,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "c6e93c2b-96c2-46b0-818f-cc6f64314c77",
+              "status": "completed",
+              "submit_latency": 0.018347900000662776,
+              "poll_count": 3,
+              "e2e_duration": 1.071862200002215,
+              "worker_duration": 0.8137,
+              "queue_wait_estimate": 0.2581622000022151,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            }
+          ]
+        },
+        {
+          "concurrency": 3,
+          "total_jobs": 6,
+          "successful_jobs": 6,
+          "wall_duration_seconds": 6.7208,
+          "throughput_jobs_per_sec": 0.89,
+          "submit_latency_median_ms": 17.42,
+          "e2e_median_seconds": 3.106,
+          "e2e_p95_seconds": 3.636,
+          "worker_median_seconds": 0.9069,
+          "queue_wait_median_seconds": 2.199,
+          "error_count": 0,
+          "job_details": [
+            {
+              "success": true,
+              "run_id": "77192c83-0ad6-4ab5-9c6e-ada2549a8287",
+              "status": "completed",
+              "submit_latency": 0.021710400000301888,
+              "poll_count": 3,
+              "e2e_duration": 1.063380600000528,
+              "worker_duration": 0.8317,
+              "queue_wait_estimate": 0.23168060000052793,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "1e0c00da-9cef-482d-9c88-263ed61e4c38",
+              "status": "completed",
+              "submit_latency": 0.021954899999400368,
+              "poll_count": 6,
+              "e2e_duration": 2.5809501000003365,
+              "worker_duration": 0.9839,
+              "queue_wait_estimate": 1.5970501000003365,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "5209f816-8a33-4276-ba94-7ce2bd0c153e",
+              "status": "completed",
+              "submit_latency": 0.023281800000404473,
+              "poll_count": 8,
+              "e2e_duration": 3.6005665000011504,
+              "worker_duration": 0.8916,
+              "queue_wait_estimate": 2.7089665000011505,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "9bdad372-a04c-4809-8c78-255524266454",
+              "status": "completed",
+              "submit_latency": 0.009170000001176959,
+              "poll_count": 8,
+              "e2e_duration": 3.635795100002724,
+              "worker_duration": 0.9267,
+              "queue_wait_estimate": 2.7090951000027244,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "86aad3a3-0c50-4203-94a3-17d272ab25f9",
+              "status": "completed",
+              "submit_latency": 0.0123148000020592,
+              "poll_count": 7,
+              "e2e_duration": 3.130104100000608,
+              "worker_duration": 0.8936,
+              "queue_wait_estimate": 2.236504100000608,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            },
+            {
+              "success": true,
+              "run_id": "6985162d-30c6-4940-be14-7bf1049191b8",
+              "status": "completed",
+              "submit_latency": 0.01312809999944875,
+              "poll_count": 7,
+              "e2e_duration": 3.081694399999833,
+              "worker_duration": 0.9203,
+              "queue_wait_estimate": 2.161394399999833,
+              "recommendation": "specialist-classification-review",
+              "verification_passed": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

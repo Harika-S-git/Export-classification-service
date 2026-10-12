@@ -1,5 +1,6 @@
 """Run the fixed scenario set against a live local API; preserve failures honestly."""
 import json
+import os
 import time
 import urllib.error
 import urllib.request
@@ -7,7 +8,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-BASE = "http://localhost:8000"
+BASE = os.getenv("API_BASE_URL", "http://localhost:8001")
 MAX_RETRIES = 5
 POLL_TIMEOUT_SECONDS = 100
 SUBMISSION_INTERVAL_SECONDS = 6.2  # stays below the default 10 submissions/minute limit
@@ -163,6 +164,18 @@ def main():
     print(f"Saved {len(results)} raw results to {outpath}")
     print(f"Completed: {completed}/{len(results)}; route matches: {matches}/{len(results)}; errors: {errors}")
     print("Route matches are not legal-correctness scores. Manually label passage relevance and claim support before reporting groundedness, context relevance, faithfulness, or hallucination rate.")
+
+    try:
+        try:
+            from evals.evaluate_results import summarize_run_results, format_text_report, compare_runs
+        except ImportError:
+            from evaluate_results import summarize_run_results, format_text_report, compare_runs
+        summary = summarize_run_results(results)
+        basepath = ROOT / "baseline_before_verification.json"
+        comparison = compare_runs(json.loads(basepath.read_text(encoding="utf-8")), results) if basepath.exists() else None
+        print("\n" + format_text_report(summary, comparison=comparison))
+    except Exception as exc:
+        print(f"Note: Could not render detailed evaluation report: {exc}")
 
 
 if __name__ == "__main__":

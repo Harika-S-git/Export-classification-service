@@ -4,12 +4,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 4.21,
+    "latency_seconds": 2.047,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "79d43503-43b7-47bc-9987-af0d9237cefd",
+      "run_id": "0d296e86-0637-415e-a43b-c1f3464a71da",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -76,7 +76,9 @@
           "excerpt": "(1) (a) \u201cheading\u201d, in respect of goods, means a description in list of tariff provisions\naccompanied by a four-digit number and includes all sub-headings of tariff items the first\nfour-digits of which correspond to that number;\n\f     (b) \u201csub-heading\u201d, in respect of goods, means a description in the list of tariff\nprovisions accompanied by a six -digit number and includes all tariff items the first\nsix-digits of which correspond to that number;"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -105,7 +107,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p14",
             "chap_73.txt#p16",
@@ -119,13 +121,17 @@
             "customs_tariff_act_general_rules.txt#p99",
             "customs_tariff_act_general_rules.txt#p133",
             "customs_tariff_act_general_rules.txt#p161"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "Candidate evidence found; no code returned until classification is independently verified."
       ],
-      "duration_seconds": 3.2965,
+      "duration_seconds": 1.0715,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -134,12 +140,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.116,
+    "latency_seconds": 1.015,
     "route_match": true,
     "verification_passed": true,
     "error": null,
     "result": {
-      "run_id": "2257744c-ed3f-471a-9d8a-f476736b7c36",
+      "run_id": "e5bd1b2d-efd6-473f-8dd8-0632ca109c21",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -177,6 +183,8 @@
         }
       ],
       "verification_passed": true,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -201,13 +209,17 @@
             "chap_73.txt#p9",
             "chap_73.txt#p14",
             "second_schedule_export_tariff.txt#p5"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": true,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.7741,
+      "duration_seconds": 0.775,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -216,12 +228,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.032,
+    "latency_seconds": 1.015,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "fd4af0b8-dca8-48ad-8761-5f8669c52740",
+      "run_id": "45a2dbb4-e3a2-4a36-8705-55472b7813a5",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -258,7 +270,9 @@
           "excerpt": "SECTION-XX\n1107\nCHAPTER-96\nCHAPTER  96\nMiscellaneous manufactured articles\nNOTES :\n1. This Chapter does not cover :\n(a) pencils for cosmetic or toilet uses (Chapter 33);\n(b) articles of Chapter 66 (for example, parts of umbrellas or walking-sticks);\n(c) imitation Jewellery (heading 7117);\n(d) parts of general use, as defined in Note 2 of Section XV, of base metal (Section  XV), or\nsimilar goods of plastics (Chapter 39);\n(e) cutlery or other articles of Chapter 82 with handles or other parts of carving or moulding\nmaterials; heading 9601 or 9602 applies, however, to separately presented handles or other parts\nof such articles;\n(f) articles of Chapter 90, for example, spectacle frames (heading 9003), mathematical\ndrawing pens (heading 9017), brushes of a kind specialised for use in dentistry or for medical,\nsurgical or veterinary purposes (heading 9018);\n(g) articles of Chapter 91 (for exa"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -275,7 +289,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_73.txt#p1",
@@ -283,13 +297,17 @@
             "chap_73.txt#p9",
             "chap_73.txt#p14",
             "chap_96.txt#p1"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.5686,
+      "duration_seconds": 0.7714,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -298,12 +316,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.044,
+    "latency_seconds": 2.063,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "b7fd8af2-3396-41f4-a737-4220f072c83a",
+      "run_id": "b2a4537b-4eea-485c-9415-5f4bbea169b2",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -340,7 +358,9 @@
           "excerpt": "SECTION-XV\n888\nCHAPTER-73\nCHAPTER 73\nArticles of iron or steel\nNOTES :\n1.\nIn this Chapter, the expression \u201ccast iron\u201d applies to products obtained by casting in which iron\npredominates by weight over each of the other elements and which do not comply with the chemical composition\nof steel as defined in Note 1(d) to Chapter 72.\n2.\nIn this Chapter, the word \u201cwire\u201d means hot or cold-formed products of any cross-sectional shape,\nof which no cross-sectional dimension exceeds 16 mm.\nTariff Item\nDescription of goods\nUnit\nRate of duty\nStandard\nPrefer-\nential\nAreas\n(1)\n(2)\n(3)\n(4)\n(5)\n7301\nSHEET PILING OF IRON OR STEEL, WHETHER OR\nNOT DRILLED, PUNCHED OR MADE FROM ASSEMBLED\nELEMENTS; WELDED ANGLES, SHAPES AND\nSECTIONS,\nOF IRON OR STEEL\n7301 10 00\n-\nSheet piling\nkg.\n15%\n-\n7301 20\n-\nAngles, shapes and sections :\n7301 20 10\n--- Steel slotted angles\nkg.\n15%\n-\n7301 20 90\n--- Other\nkg.\n15%\n-\n__________"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -357,7 +377,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p12",
             "chap_73.txt#p14",
@@ -365,13 +385,17 @@
             "second_schedule_export_tariff.txt#p1",
             "second_schedule_export_tariff.txt#p5",
             "chap_73.txt#p1"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.5516,
+      "duration_seconds": 0.9014,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -382,10 +406,10 @@
     "status": "completed",
     "latency_seconds": 1.032,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "e3d9d431-8d96-4941-83c4-b7c9e0fd64c2",
+      "run_id": "1b245059-de2b-46b5-ab5f-b99f6b16dd39",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -422,7 +446,9 @@
           "excerpt": "Sl. Chapter/Heading/              Description of article                               Rate of duty\nNo.  Sub-heading/\n      Tariff Item\n(1)          (2)                            (3)                                            (4)\n                                                                                       1\n1.       0703 10          Onion                                                         [Nil]\n1A.      0901             Coffee                                                       Rs. 2,200 per quintal\n2.       0902             Tea                                                          Rs. 5 per kilogram\n3.       0904 11          Black pepper                                                 Rs. 5 per kilogram\n4.       0908 30          Cardamom                                                     Rs. 50 per kilogram\n5.       0910 30          Turmeric, in powder form        "
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -439,7 +465,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_73.txt#p14",
@@ -447,13 +473,17 @@
             "customs_tariff_act_general_rules.txt#p156",
             "customs_tariff_act_general_rules.txt#p195",
             "second_schedule_export_tariff.txt#p2"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.5859,
+      "duration_seconds": 0.8725,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -462,12 +492,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 2.072,
+    "latency_seconds": 1.031,
     "route_match": true,
     "verification_passed": true,
     "error": null,
     "result": {
-      "run_id": "26f17750-73d0-4bb2-8cba-27ac4e5814f5",
+      "run_id": "718353fa-99b6-4902-ad03-cc32db54ef8b",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -505,6 +535,8 @@
         }
       ],
       "verification_passed": true,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -529,13 +561,17 @@
             "chap_73.txt#p1",
             "chap_73.txt#p7",
             "chap_73.txt#p14"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": true,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 1.3348,
+      "duration_seconds": 0.8121,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -544,12 +580,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.041,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "ba65fea6-c0da-4a70-a642-a05f3ac0a87f",
+      "run_id": "d55e8268-eaa1-4f89-a178-920f1dad287e",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -586,7 +622,9 @@
           "excerpt": "SECTION-XV\n896\nCHAPTER-73\n7314 42 10\n--- Wire netting\nkg.\n15%\n-\n7314 42 90\n--- Other\nkg.\n15%\n-\n7314 49\n--\nOther :\n7314 49 10\n--- Wire netting\nkg.\n15%\n-\n7314 49 90\n--- Other\nkg.\n15%\n-\n7314 50 00\n-\nExpanded metal\nkg.\n15%\n-\n____________________________________________________________________________________________________________\n7315\nCHAIN AND PARTS THEREOF, OF IRON OR STEEL\n-\nArticulated link chain and parts thereof :\n7315 11 00\n-- Roller chain\nkg.\n15%\n-\n7315 12\n--\nOther chain :\n7315 12 10\n--- Lifting and hoisting chain\nkg.\n15%\n-\n7315 12 20\n--- Ship chain\nkg.\n15%\n-\n7315 12 90\n--- Other\nkg.\n15%\n-\n7315 19 00\n-- Parts\nkg.\n15%\n-\n7315 20 00\n-\nSkid chain\nkg.\n15%\n-\n-\nOther chain :\n7315 81 00\n-- Stud-link\nkg.\n15%\n-\n7315 82 00\n-- Other, welded link\nkg.\n15%\n-\n7315 89 00\n-- Other\nkg.\n15%\n-\n7315 90 00\n-\nOther parts\nkg.\n15%\n-\n___________________________________________________________________________"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -603,7 +641,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p13",
             "second_schedule_export_tariff.txt#p1",
@@ -611,13 +649,17 @@
             "chap_73.txt#p6",
             "chap_73.txt#p8",
             "chap_73.txt#p9"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.7493,
+      "duration_seconds": 0.8044,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -626,12 +668,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.299,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "672b1d9c-9822-43b9-8217-4e940540105a",
+      "run_id": "c3f04081-7016-474b-b231-c277586a6dde",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -668,7 +710,9 @@
           "excerpt": "S.     Chapter or heading       Description of goods                                    No. Rate of duty\n        sub-heading or\n          tariff item\n(1)            (2)                       (3)                                                       (4)\n1.          0703 10                    Onions                                                      40%\n1A.         0901                       Coffee                                                      Nil\n2.          0902                       Tea                                                         Nil\n3.          0904 11                    Black pepper                                                Nil\n4.          0908 31, 0908 32           Cardamom                                                    Nil\n5.          0910 30                    Turmeric, in powder form                                    Nil\n6.          0910 30          "
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -685,7 +729,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_96.txt#p1",
@@ -693,13 +737,17 @@
             "customs_tariff_act_general_rules.txt#p195",
             "second_schedule_export_tariff.txt#p2",
             "second_schedule_export_tariff.txt#p21"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "Scope limited to Chapters 73 and 96."
       ],
-      "duration_seconds": 0.7021,
+      "duration_seconds": 0.8084,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -710,10 +758,10 @@
     "status": "completed",
     "latency_seconds": 1.031,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "9f49223b-4715-4e98-a098-b08f8b3cb8d7",
+      "run_id": "885c0420-36d8-4f6b-ae40-3267bc41cc17",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -750,7 +798,9 @@
           "excerpt": "SECTION-XV\n888\nCHAPTER-73\nCHAPTER 73\nArticles of iron or steel\nNOTES :\n1.\nIn this Chapter, the expression \u201ccast iron\u201d applies to products obtained by casting in which iron\npredominates by weight over each of the other elements and which do not comply with the chemical composition\nof steel as defined in Note 1(d) to Chapter 72.\n2.\nIn this Chapter, the word \u201cwire\u201d means hot or cold-formed products of any cross-sectional shape,\nof which no cross-sectional dimension exceeds 16 mm.\nTariff Item\nDescription of goods\nUnit\nRate of duty\nStandard\nPrefer-\nential\nAreas\n(1)\n(2)\n(3)\n(4)\n(5)\n7301\nSHEET PILING OF IRON OR STEEL, WHETHER OR\nNOT DRILLED, PUNCHED OR MADE FROM ASSEMBLED\nELEMENTS; WELDED ANGLES, SHAPES AND\nSECTIONS,\nOF IRON OR STEEL\n7301 10 00\n-\nSheet piling\nkg.\n15%\n-\n7301 20\n-\nAngles, shapes and sections :\n7301 20 10\n--- Steel slotted angles\nkg.\n15%\n-\n7301 20 90\n--- Other\nkg.\n15%\n-\n__________"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -767,7 +817,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_96.txt#p1",
@@ -775,13 +825,17 @@
             "customs_tariff_act_general_rules.txt#p156",
             "customs_tariff_act_general_rules.txt#p195",
             "chap_73.txt#p1"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.6419,
+      "duration_seconds": 0.7674,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -790,12 +844,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 5.482,
+    "latency_seconds": 1.015,
     "route_match": true,
     "verification_passed": true,
     "error": null,
     "result": {
-      "run_id": "ba1d4f5f-8f1c-4174-beae-9698490ac5c6",
+      "run_id": "db816a43-1f5d-4333-9a45-e26ca8a580bb",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -833,6 +887,8 @@
         }
       ],
       "verification_passed": true,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -857,13 +913,17 @@
             "chap_73.txt#p1",
             "chap_73.txt#p6",
             "chap_73.txt#p9"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": true,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 3.3914,
+      "duration_seconds": 0.7953,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -872,12 +932,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.032,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "405c730e-4025-4a89-a29b-6163f3757707",
+      "run_id": "52aed56e-7cbb-48b1-963c-592bd1d59a46",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -914,7 +974,9 @@
           "excerpt": "SECTION-XV\n903\nCHAPTER-73\nTariff Act, read with rules 20 and 22 of the Customs Tariff (Identification, Assessment and Collection of\nCountervailing Duty on Subsidized Articles and for Determination of Injury) Rules, 1995, the Central Govern-\nment, after considering the aforesaid final findings of the designated authority, hereby imposes on the subject\ngoods, the description of which is specified in column (3) of the Table below, falling under tariff item of the\nFirst Schedule to the Customs Tariff Act as specified in the corresponding entry in column (2), originating in\nthe countries as specified in the corresponding entry in column (4), exported from the countries as specified\nin the corresponding entry in column (5), produced by the producers as specified in the corresponding entry\nin column (6), and imported into India, countervailing duty calculated at the rate mentioned in column (7)"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -931,7 +993,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_73.txt#p1",
@@ -939,13 +1001,17 @@
             "chap_73.txt#p9",
             "chap_73.txt#p14",
             "chap_73.txt#p16"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.7266,
+      "duration_seconds": 0.728,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -954,12 +1020,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.033,
+    "latency_seconds": 1.047,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "4a559b8e-6707-4038-a472-4dde6fdc582a",
+      "run_id": "d13d9c8c-7cd6-4491-b52e-5d1b364a5265",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -996,7 +1062,9 @@
           "excerpt": "SECTION-XV\n893\nCHAPTER-73\n7307 99 10\n--- Galvanised\nkg.\n15%\n-\n7307 99 90\n--- Other\nkg.\n*25%\n-\n____________________________________________________________________________________________________________\n7308\nSTRUCTURES (EXCLUDING PREFABRICATED BUILDINGS\nOF HEADING 9406) AND PARTS OF STRUCTURES (FOR\nEXAMPLE,  BRIDGES AND BRIDGE-SECTIONS, LOCK-\nGATES, TOWERS, LATTICE MASTS, ROOFS, ROOFING\nFRAME-WORKS, DOORS AND WINDOWS AND THEIR\nFRAMES AND THRESHOLDS FOR DOORS, SHUTTERS,\nBALUSTRADES, PILLARS AND COLUMNS), OF IRON  OR\nSTEEL; PLATES, RODS, ANGLES, SHAPES, SECTIONS,\nTUBES AND THE LIKE, PREPARED FOR USE IN\nSTRUCTURES, OF IRON\n OR STEEL\n7308 10 00\n-\nBridges and bridge-sections\nu\n15%\n-\n7308 20\n-\nTowers and lattice masts :\n---\nTowers, whether or not assembled :\n7308 20 11\n---- For transmission line\nu\n15%\n-\n7308 20 19\n---- Other\nu\n15%\n-\n7308 20 20\n--- Lattice masts\nu\n15%\n-\n7308 30 00\n-\nDoors, wind"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1013,7 +1081,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_96.txt#p1",
@@ -1021,13 +1089,17 @@
             "customs_tariff_act_general_rules.txt#p195",
             "chap_73.txt#p1",
             "chap_73.txt#p6"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.5382,
+      "duration_seconds": 0.917,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1036,12 +1108,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.038,
+    "latency_seconds": 1.031,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "0d2af0b0-d351-4b62-acdd-cc21044143b6",
+      "run_id": "9fbd6fc6-bf30-4897-b39b-44e809b64232",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1078,7 +1150,9 @@
           "excerpt": "SECTION-XV\n893\nCHAPTER-73\n7307 99 10\n--- Galvanised\nkg.\n15%\n-\n7307 99 90\n--- Other\nkg.\n*25%\n-\n____________________________________________________________________________________________________________\n7308\nSTRUCTURES (EXCLUDING PREFABRICATED BUILDINGS\nOF HEADING 9406) AND PARTS OF STRUCTURES (FOR\nEXAMPLE,  BRIDGES AND BRIDGE-SECTIONS, LOCK-\nGATES, TOWERS, LATTICE MASTS, ROOFS, ROOFING\nFRAME-WORKS, DOORS AND WINDOWS AND THEIR\nFRAMES AND THRESHOLDS FOR DOORS, SHUTTERS,\nBALUSTRADES, PILLARS AND COLUMNS), OF IRON  OR\nSTEEL; PLATES, RODS, ANGLES, SHAPES, SECTIONS,\nTUBES AND THE LIKE, PREPARED FOR USE IN\nSTRUCTURES, OF IRON\n OR STEEL\n7308 10 00\n-\nBridges and bridge-sections\nu\n15%\n-\n7308 20\n-\nTowers and lattice masts :\n---\nTowers, whether or not assembled :\n7308 20 11\n---- For transmission line\nu\n15%\n-\n7308 20 19\n---- Other\nu\n15%\n-\n7308 20 20\n--- Lattice masts\nu\n15%\n-\n7308 30 00\n-\nDoors, wind"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1095,7 +1169,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p1",
             "chap_73.txt#p8",
@@ -1103,13 +1177,17 @@
             "second_schedule_export_tariff.txt#p1",
             "second_schedule_export_tariff.txt#p5",
             "chap_73.txt#p6"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.6249,
+      "duration_seconds": 0.7925,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1118,12 +1196,12 @@
     "expected_route": "seek-product-clarification",
     "actual_route": "seek-product-clarification",
     "status": "completed",
-    "latency_seconds": 1.038,
+    "latency_seconds": 2.047,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "f8bdfb2b-061b-41e1-b510-ab1b0052aece",
+      "run_id": "abc4a8d3-5599-4825-9d70-209182f16320",
       "status": "completed",
       "recommendation": "seek-product-clarification",
       "proposed_hs_code": null,
@@ -1160,7 +1238,9 @@
           "excerpt": "SECTION-XV\n897\nCHAPTER-73\n---\nSpikes :\n7317 00 21\n---- Dog spikes\nkg.\n15%\n-\n7317 00 29\n---- Other\nkg.\n15%\n-\n7317 00 30\n--- Tacks\nkg.\n15%\n-\n---\nOther :\n7317 00 91\n---- Staples other than in strips, and drawing pins\nkg.\n15%\n-\n7317 00 99\n---- Other\nkg.\n15%\n-\n____________________________________________________________________________________________________________\n7318\nSCREWS, BOLTS, NUTS, COACH-SCREWS, SCREW\nHOOKS, RIVETS, COTTERS, COTTER-PINS, WASHERS\n(INCLUDING SPRING WASHERS) AND SIMILAR ARTICLES,\nOF IRON OR STEEL\n-\nThreaded articles :\n7318 11\n--\nCoach screws :\n7318 11 10\n--- Machine screws\nkg.\n15%\n-\n7318 11 90\n--- Other\nkg.\n15%\n-\n7318 12 00\n-- Other wood screws\nkg.\n15%\n-\n7318 13 00\n-- Screw hooks and screw rings\nkg.\n15%\n-\n7318 14 00\n-- Self-tapping screws\nkg.\n15%\n-\n7318 15 00\n-- Other screws and bolts, whether or not with their\nkg.\n*25%\n1\nnuts or washers\n7318 16 00\n-- Nuts\nkg.\n*25%\n-\n"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1177,7 +1257,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p14",
             "chap_73.txt#p1",
@@ -1185,13 +1265,17 @@
             "chap_96.txt#p1",
             "chap_73.txt#p9",
             "chap_73.txt#p10"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "Article identity and intended use need clarification."
       ],
-      "duration_seconds": 0.6558,
+      "duration_seconds": 0.9412,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1200,12 +1284,12 @@
     "expected_route": "seek-product-clarification",
     "actual_route": "seek-product-clarification",
     "status": "completed",
-    "latency_seconds": 1.068,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "f333fd6b-99d3-453f-8b06-e21e85d4b076",
+      "run_id": "6e650628-f08d-4b6e-b31e-ae002bb82975",
       "status": "completed",
       "recommendation": "seek-product-clarification",
       "proposed_hs_code": null,
@@ -1242,7 +1326,9 @@
           "excerpt": "SECTION-XX\n1108\nCHAPTER-96\nTariff Item\nDescription of goods\nUnit\nRate of duty\nStandard\nPrefer-\nential\nAreas\n(1)\n(2)\n(3)\n(4P)\n(5)\n9601\nWORKED IVORY, BONE, TORTOISE-SHELL, HORN,\nANTLERS,  CORAL, MOTHER-OF-PEARL AND OTHER\nANIMAL CARVING  MATERIAL, AND ARTICLES OF\nTHESE MATERIALS (INCLUDING ARTICLES OBTAINED\nBY MOULDING)\n9601 10 00\n- Worked ivory and articles of ivory\nkg.\n10%\n-\n9601 90\n-\nOther :\n9601 90 10\n--- Worked tortoise-shell and articles thereof\nkg.\n10%\n-\n9601 90 20\n--- Worked mother-of-pearl and articles thereof\nkg.\n10%\n-\n9601 90 30\n--- Worked bone (excluding whale bone) and\nkg.\n10%\n-\narticles thereof\n9601 90 40\n--- Worked horn, coral and other animal carving\nkg.\n10%\n-\nmaterial and articles thereof\n9601 90 90\n--- Other\nkg.\n10%\n-\n____________________________________________________________________________________________________\n9602\nWORKED VEGETABLE OR MINERAL CARVING\nMATERIAL AND AR"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1259,7 +1345,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_96.txt#p1",
@@ -1267,13 +1353,17 @@
             "chap_73.txt#p1",
             "chap_73.txt#p16",
             "chap_96.txt#p2"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "Insufficient product details; classification was not attempted."
       ],
-      "duration_seconds": 0.5772,
+      "duration_seconds": 0.7985,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1282,12 +1372,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.018,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "36d96911-7cd2-4911-a841-580b64aea4c3",
+      "run_id": "f5fcd74b-fbfc-42cb-84e6-2d5867d7c6ce",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1324,7 +1414,9 @@
           "excerpt": "SECTION-XV\n902\nCHAPTER-73\n(a)\ntwenty per cent. ad valorem when imported during the period from 13th August, 2014 to 12th August,\n2015 (both days inclusive);\n(b)\nten per cent. ad valorem when imported during the period from 13th August, 2015 to 12th August,\n2016 (both days inclusive); and\n(c)\nfive per cent. ad valorem when imported during the period from 13th August, 2016 to 12th February,\n2017.\n2.\nNothing contained in this notification shall apply to imports of Seamless Pipes and Tubes from coun-\ntries notified as developing countries under clause (a) of sub-section (6) of section 8B of the Customs Tariff\nAct, other than the People's Republic of China .\nNote: For the purpose of this notification, Seamless Pipes and Tubes does not include-\n(i)\nSeamless alloy-steel pipes, tubes and hollow profiles of specification ASTM A213/ASME\nSA 213 and ASTM A335 /ASME SA 335 or equivalent BIS/DIN/BS/EN"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1341,7 +1433,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p14",
             "second_schedule_export_tariff.txt#p1",
@@ -1349,13 +1441,17 @@
             "chap_73.txt#p6",
             "chap_73.txt#p9",
             "chap_73.txt#p15"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.555,
+      "duration_seconds": 0.8171,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1364,12 +1460,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.036,
+    "latency_seconds": 1.031,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "4f0cb2ae-b5f3-44b5-9195-dc367bfaafb9",
+      "run_id": "a6fbdaaa-ab0a-4aad-8a2c-c0631614c4e3",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1406,7 +1502,9 @@
           "excerpt": "2.       The rules for the interpretation of the First Schedule to the Central Excise Tariff act, the Section\nand Chapter Notes and the General Explanatory Notes of the First Schedule shall apply to the\ninterpretation of this Schedule.\nHeading Sub-heading                    Description of Goods                               Rate of duty\n  No.       No.\n  (1)       (2)                                  (3)                                           (4)\n 21.06      2106.00          Pan Masala                                                 23%"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1423,7 +1521,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "second_schedule_export_tariff.txt#p1",
             "chap_96.txt#p1",
@@ -1431,13 +1529,17 @@
             "chap_96.txt#p6",
             "customs_tariff_act_general_rules.txt#p156",
             "customs_tariff_act_general_rules.txt#p195"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.7639,
+      "duration_seconds": 0.8356,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1446,12 +1548,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.038,
+    "latency_seconds": 2.046,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "030a7677-4aee-4dd2-8efe-9644108cdd13",
+      "run_id": "3ae024c6-b731-42d4-98bc-e678aa88d08c",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1488,7 +1590,9 @@
           "excerpt": "SECTION-XV\n901\nCHAPTER-73\nshall come into force  on  the date of their publication in the Official Gazette.\n2.\nLevy of additional duty- For the purpose of sub-section  (3)of section  3  of  the Customs Tariff Act,\n1975 (51  of  1975),  the additional  duty  leviable on any imported article  specified  in column  (2)  of the Table\nannexed hereto shall be  equal  to  the excise duty for the time being leviable on the material specified in the\ncorresponding entry in column (3) of the said Table to the extent that material is  used in the manufacture of\nthe  Imported article.\nTable\nS.No.\nName of article\nName of material\n(1)\n(2)\n(3)\n1.\nOmitted.\n2.\nStainless  steel  manufactures  for  household use.\n      Stainless Steel.\nAdditional Duty on synthetic fabrics and stainless steel manufacture.\n[Notfn. No.357/76-Cus. dt. 2.8.1976 as amended by Notfn. No.125/95].\nThe  articles specified in the Sche"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1505,7 +1609,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p1",
             "second_schedule_export_tariff.txt#p1",
@@ -1513,13 +1617,17 @@
             "chap_73.txt#p9",
             "chap_73.txt#p10",
             "chap_73.txt#p14"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.6233,
+      "duration_seconds": 1.0393,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1528,12 +1636,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.035,
+    "latency_seconds": 1.031,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "a4c371b4-8bed-4956-9fbb-835822513637",
+      "run_id": "0c4a30a2-3f2f-47cc-afe4-13ab7a62cc1e",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1600,7 +1708,9 @@
           "excerpt": "(1) (a) \u201cheading\u201d, in respect of goods, means a description in list of tariff provisions\naccompanied by a four-digit number and includes all sub-headings of tariff items the first\nfour-digits of which correspond to that number;\n\f     (b) \u201csub-heading\u201d, in respect of goods, means a description in the list of tariff\nprovisions accompanied by a six -digit number and includes all tariff items the first\nsix-digits of which correspond to that number;"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1629,7 +1739,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p14",
             "chap_73.txt#p16",
@@ -1643,13 +1753,17 @@
             "customs_tariff_act_general_rules.txt#p99",
             "customs_tariff_act_general_rules.txt#p133",
             "customs_tariff_act_general_rules.txt#p161"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "Candidate evidence found; no code returned until classification is independently verified."
       ],
-      "duration_seconds": 0.5292,
+      "duration_seconds": 0.8124,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   },
@@ -1658,12 +1772,12 @@
     "expected_route": "specialist-classification-review",
     "actual_route": "specialist-classification-review",
     "status": "completed",
-    "latency_seconds": 1.04,
+    "latency_seconds": 1.016,
     "route_match": true,
-    "verification_passed": true,
+    "verification_passed": false,
     "error": null,
     "result": {
-      "run_id": "eba324d3-c3bd-474b-9c0f-588802ec67cd",
+      "run_id": "b3bbe4b1-6a83-408b-931b-5645e9501eb8",
       "status": "completed",
       "recommendation": "specialist-classification-review",
       "proposed_hs_code": null,
@@ -1700,7 +1814,9 @@
           "excerpt": "SECTION-XV\n894\nCHAPTER-73\ncompressed or liquefied gas), of iron or\nsteel, of a capacity exceeding 300 l, whether\nor not lined or heat-insulated, but not fitted\nwith mechanical or thermal equipment :\n7309 00 10\n--- Galvanized iron tanks\nkg.\n15%\n-\n7309 00 20\n--- Galvanized iron barrels and drums\nkg.\n15%\n-\n7309 00 30\n--- Pressed steel tanks\nkg.\n15%\n-\n7309 00 40\n--- Pressure vessels\nkg.\n15%\n-\n7309 00 90\n--- Other\nkg.\n15%\n-\n____________________________________________________________________________________________________________\n7310\nTANKS, CASKS, DRUMS, CANS, BOXES AND SIMILAR\nCONTAINERS, FOR ANY MATERIAL (OTHER THAN\nCOMPRESSED OR LIQUEFIED GAS), OF IRON OR STEEL,\nOF A CAPACITY NOT EXCEEDING 300 L, WHETHER OR\nNOT LINED OR HEAT-INSULATED, BUT NOT FITTED\nWITH MECHANICAL OR THERMAL EQUIPMENT\n7310 10\n-\nOf a capacity of 50 l or more :\n7310 10 10\n--- Tin plate containers\nkg.\n15%\n-\n7310 10 20\n---"
         }
       ],
-      "verification_passed": true,
+      "verification_passed": false,
+      "classification_support_passed": false,
+      "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness.",
       "prompt_version": "classification-v1",
       "steps": [
         {
@@ -1717,7 +1833,7 @@
         },
         {
           "step": "verification",
-          "verified": true,
+          "verified": false,
           "citation_ids": [
             "chap_73.txt#p14",
             "chap_73.txt#p1",
@@ -1725,13 +1841,17 @@
             "chap_73.txt#p9",
             "chap_96.txt#p1",
             "chap_73.txt#p7"
-          ]
+          ],
+          "citation_resolution_passed": true,
+          "evidence_relevance_passed": false,
+          "classification_support_passed": false,
+          "verification_scope": "Citation resolution and preliminary lexical relevance only; not semantic entailment, classification support, or legal correctness."
         }
       ],
       "warnings": [
         "No verified code is available from the current evidence set."
       ],
-      "duration_seconds": 0.6543,
+      "duration_seconds": 0.7897,
       "disclaimer": "Proposed decision support only. Not a customs ruling or authorization to file a declaration."
     }
   }

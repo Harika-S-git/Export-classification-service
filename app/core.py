@@ -3,6 +3,8 @@ import os, re, json, time, uuid, logging
 from pathlib import Path
 from typing import TypedDict, Any
 from prometheus_client import Counter, Histogram, Gauge
+from redis import Redis
+from redis.exceptions import RedisError
 
 BASE = Path(__file__).resolve().parent.parent
 CORPUS_DIR = Path(os.getenv('CORPUS_DIR', str(BASE / 'corpus')))
@@ -12,6 +14,26 @@ REQUESTS = Counter('export_requests_total', 'Requests received', ['status'])
 RUN_LATENCY = Histogram('export_run_seconds', 'End-to-end processing seconds')
 TOOL_CALLS = Counter('export_tool_calls_total', 'Agent tool calls', ['tool'])
 INDEX_CHUNKS = Gauge('export_corpus_chunks', 'Number of indexed corpus passages')
+VERIFICATION_METRIC_KEY = 'export:metrics:verification'
+VERIFICATION_METRIC_OUTCOMES = ('failed_citation', 'failed_relevance', 'passed')
+_VERIFICATION_METRICS_REDIS = Redis.from_url(
+    os.getenv('REDIS_URL', 'redis://redis:6379/0'),
+    socket_connect_timeout=2,
+    socket_timeout=2,
+)
+
+
+def _increment_verification_outcome(outcome: str) -> None:
+    if outcome not in VERIFICATION_METRIC_OUTCOMES:
+        raise ValueError(f'Unsupported verification outcome: {outcome}')
+    try:
+        _VERIFICATION_METRICS_REDIS.hincrby(
+            VERIFICATION_METRIC_KEY,
+            outcome,
+            1,
+        )
+    except RedisError as exc:
+        logger.error('Could not record verification metric outcome %s: %s', outcome, exc)
 
 # Documents in corpus/ are deliberately required to be sourced from official tariff/policy publications.
 def load_passages():
@@ -352,6 +374,7 @@ def _verify(state: AgentState) -> AgentState:
     verified = citation_resolution_passed and evidence_relevance_passed
 
     if not citation_resolution_passed:
+        _increment_verification_outcome('failed_citation')
         state.update(
             proposed_code=None,
             route='specialist-classification-review',
@@ -360,7 +383,20 @@ def _verify(state: AgentState) -> AgentState:
                 'Verification failed; fail-closed escalation applied.'
             ],
         )
-    elif proposed_code and not classification_support_passed:
+    elif not evidence_relevance_passed:
+        _increment_verification_outcome('failed_relevance')
+        if proposed_code:
+            state.update(
+                proposed_code=None,
+                route='specialist-classification-review',
+                warnings=state.get('warnings', []) + [
+                    'Lexical relevance failed; proposed code cleared for specialist review.'
+                ],
+            )
+    else:
+        _increment_verification_outcome('passed')
+
+    if proposed_code and not classification_support_passed:
         state.update(
             proposed_code=None,
             route='specialist-classification-review',

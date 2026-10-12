@@ -1,49 +1,88 @@
 # Export Classification Check Service (Mini Project 07)
 
-An evidence-first, asynchronous REST service for proposed export tariff classification. It does **not** file declarations and must not be treated as legal advice or a customs ruling. A licensed customs broker makes the final decision.
+An evidence-first, asynchronous REST advisory service for proposed export tariff classification.
 
-## Important status / honest limitations
+> [!IMPORTANT]
+> **Legal Disclaimer:** This service provides decision support only. It does **not** file customs declarations, calculate duties, or replace a licensed customs broker. The system enforces a **strict fail-closed policy**: if official evidence is absent, competing, or unverified, it escalates to human specialist review rather than guessing an HS code.
 
-This repository is a runnable engineering starter implementing the API, schema validation, Redis/RQ job queue, LangGraph agent hand-off, iterative retrieval, fail-closed verification, web client, metrics, monitoring, feedback endpoint, evaluation scenarios and operational docs. **It does not ship an official CBIC/DGFT tariff corpus, and it deliberately does not invent HS codes.** Before legal classification can be demonstrated, populate `corpus/` with verified current official source text. The flask scenario should be escalated until its named-article heading, GRI, and relevant notes are retrieved and independently verified. The lexical retrieval is a baseline; replace/augment it with Chroma or FAISS embeddings plus metadata filters as the next engineering step.
+---
 
-## Architecture
+## 1. System Architecture
+
+The application is decomposed into five decoupled containers orchestrated via Docker Compose:
 
 ```mermaid
 flowchart LR
-  UI[Web client] --> API[FastAPI: contract, rate limit, run ID]
-  API --> Q[(Redis / RQ queue)]
-  Q --> W[Agent worker]
-  W --> R[Research agent: retrieval tools + query expansion]
-  R --> C[Classification agent]
-  C --> V[Independent evidence verifier]
-  V --> Q
-  API --> M[Prometheus metrics]
-  M --> G[Grafana]
-  W --> Q
+    Client[Web UI / REST Client] -->|HTTP POST /v1/runs| API[FastAPI Gateway]
+    API -->|Quarantine 422| Q[(Redis: quarantine)]
+    API -->|Enqueue 202| Q[(Redis: classification queue)]
+    Q --> W[Agent Worker: RQ]
+    W --> R[Research Node: Lexical Retrieval]
+    R --> C[Classification Node: Rules & Scope]
+    C --> V[Verification Node: Citation & Relevance Filter]
+    V -->|Cache Run Result| Q[(Redis: run-result)]
+    API -->|Poll Status| Q
+    API -->|Probes /live & /ready| K8s[Orchestrator]
+    API -->|Scrape /metrics| Prom[Prometheus 9090]
+    Prom --> Graf[Grafana 3000]
 ```
 
-**Deployment boundaries:** API is independently scalable and does not block on long runs; Redis isolates submission from worker failures and buffers bursts; workers can scale horizontally; Prometheus/Grafana are operational services. `agent-worker` is the Compose scaling target.
+### Component Roles & Isolation
+- **API Gateway (`app.main`)**: FastAPI web server handling Pydantic contract validation, rate limiting (10 req/min/IP), deterministic prompt-injection guardrails, and idempotent request deduplication (`X-Idempotency-Key`).
+- **Broker & Data Store (`redis:7-alpine`)**: Separates request submission from execution, maintains the `classification` queue, caches run results (`run-result:{run_id}`), and tracks public-to-job ID mappings (`run-job:{run_id}`).
+- **Agent Worker (`app.worker` + `app.core`)**: Python process executing bounded LangGraph state graphs with query expansion and citation verification.
+- **Monitoring (`monitoring/`)**: The API `/metrics` endpoint exposes verification counters shared by the API and RQ workers through Redis. Prometheus and Grafana are optional Compose services; the API scrape itself requires Redis to be reachable.
 
-## Quick start
+---
 
-Prerequisites: Docker Desktop / Docker Engine with Compose v2.
+## 2. Quick Start & Prerequisites
 
-1. Copy `.env.example` to `.env`; change the Grafana password.
-2. Put official CBIC/DGFT text documents into `corpus/` (plain `.txt` or `.md`, excluding README files). Keep source filenames/version metadata and do not invent or paraphrase tariff language.
-3. From repository root:
+### Prerequisites
+- Docker Desktop with Compose v2
+- Python 3.11+ / PowerShell (for local tooling and test suites)
 
-   ```bash
+### Startup Commands
+1. Copy configuration file:
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+2. Build and start services:
+   ```powershell
    docker compose up --build -d
+   ```
+3. Verify running services:
+   ```powershell
    docker compose ps
    ```
 
-4. Open the web UI at http://localhost:8000. API docs: http://localhost:8000/docs. Health: http://localhost:8000/health. Prometheus: http://localhost:9090. Grafana: http://localhost:3000.
-5. Submit a request through the UI or API. The API returns `202` and a run ID; poll the returned `status_url`. When the official corpus is empty or insufficient, escalation is expected.
-6. Stop: `docker compose down`. Remove local data volumes only if intended: `docker compose down -v`.
-
-### PowerShell API example
-
+### Port Conflict Handling (e.g., Host Port 8000 Occupied)
+If port 8000 is occupied by an unrelated host application:
 ```powershell
+docker compose run -d -p 8001:8000 --name exportclassification-api-live api
+$env:API_BASE_URL = "http://localhost:8001"
+```
+
+---
+
+## 3. REST API Contract & Endpoints
+
+| Endpoint | Method | Status | Purpose |
+|---|---|---|---|
+| `/live` | `GET` | `200` | Process liveness probe. |
+| `/ready` | `GET` | `200` / `503` | Readiness probe verifying Redis, queue depth, and worker count. |
+| `/health` | `GET` | `200` | Backward-compatible health check (`status: ok \| degraded`). |
+| `/metrics` | `GET` | `200` | Prometheus metrics scrape target. |
+| `/v1/runs` | `POST` | `202` | Submits a classification request. Returns `run_id` and `status_url`. |
+| `/v1/runs/{run_id}` | `GET` | `200` / `404` | Polls run status (`queued`, `started`, `completed`, `failed`). |
+| `/v1/quarantine/summary` | `GET` | `200` | Audits requests rejected by input guardrails. |
+| `/v1/feedback` | `POST` | `200` | Submits human analyst feedback on classification outputs. |
+
+### Submitting a Request (PowerShell)
+```powershell
+$headers = @{
+  "Content-Type" = "application/json"
+  "X-Idempotency-Key" = "shipment-box-001"
+}
 $body = @{
   description = "Stainless steel vacuum flask with a moulded plastic outer body"
   materials = @("stainless steel", "plastic")
@@ -52,90 +91,86 @@ $body = @{
   destination_country = "United States"
   client_id = "demo"
 } | ConvertTo-Json
-$job = Invoke-RestMethod -Method Post -Uri http://localhost:8000/v1/runs -ContentType 'application/json' -Body $body
+
+$job = Invoke-RestMethod -Method Post -Uri "http://localhost:8001/v1/runs" -Headers $headers -Body $body
 $job
-Invoke-RestMethod -Uri ("http://localhost:8000" + $job.status_url)
+
+# Poll for terminal result
+Start-Sleep -Seconds 2
+Invoke-RestMethod -Uri ("http://localhost:8001" + $job.status_url)
 ```
 
-## API data contract
+---
 
-- `POST /v1/runs` — JSON `ProductRequest`, responds `202` with `run_id`, `status_url`, queue job ID. Invalid data gets `422` and does not enter the queue.
-- `GET /v1/runs/{run_id}` — queued/running/completed/failed status and final recommendation. The public run ID is mapped to the RQ job ID in Redis; completed output is also cached under the public run ID so polling does not depend on the finished job remaining in the queue registry.
-- `POST /v1/feedback` — `{ "run_id": "...", "satisfactory": true, "reason": "..." }`.
-- `GET /v1/feedback/summary` — aggregate feedback.
-- `GET /v1/quarantine/summary` — recent validation/guardrail rejection summary for local coursework evidence.
-- `GET /health`, `GET /metrics`.
+## 4. Evaluation Methodology & Reproducible Quality Metrics
 
-Malformed Pydantic requests are rejected with `422`, their field-level errors are quarantined, and no job is enqueued. Deterministic checks scan free-text description, intended use and materials for a small set of common prompt-injection/threat patterns; these rules are a narrow demonstration, not a complete injection or toxicity detector.
+The evaluation suite tests 20 fixed scenarios (`evals/scenarios.json`) representing complex customs classification challenges.
 
-Fields: `description` (8–1000 chars), `materials` (up to 20 strings), optional `intended_use`, `country_of_export` (defaults India), required `destination_country` (must differ from origin), optional non-negative `value_usd` (max 1 billion), optional positive `quantity` (max 1 billion), and `client_id`. Do not send sensitive data.
+### Scientific Integrity Principles
+- **Route Match is NOT Legal Correctness:** A 100% route match indicates that test policy routing succeeded (escalating to specialist or asking for clarification). It does **not** prove legal tariff accuracy.
+- **Separation of Evaluation Tiers:**
+  1. *Preliminary Lexical Overlap (Automated):* Filters out weak material-only matches.
+  2. *Semantic Claim Entailment (Manual):* Verifies whether cited excerpts logically prove each claim in the rationale.
+  3. *Statutory Legal Correctness (Specialist):* Verifies compliance with statutory GRI and official customs notes.
+- **Zero Fabrication:** Groundedness, Faithfulness, and Hallucination rates are never fabricated. When manual annotations are pending, they are reported as **PENDING**.
 
-## Agent topology and safety
+### Run Batch Evaluation & Reporting
+```powershell
+# Run the batch evaluation against the live service
+$env:API_BASE_URL = "http://localhost:8001"
+.venv\Scripts\python.exe evals/run_batch.py
 
-1. **Research agent** calls the request-field tool and corpus-search tool, then expands its query when retrieval is weak. The named-article search is an explicit safeguard for vacuum flasks.
-2. **Classification agent** checks scope and evidence. It does not infer a code solely from material similarity.
-3. **Verification agent** checks every returned citation ID against retrieved corpus text. If verification fails, code output is suppressed and the route escalates.
+# Generate evaluation summary and baseline comparison
+.venv\Scripts\python.exe evals/evaluate_results.py --results evals/latest_results.json --baseline evals/baseline_before_verification.json --annotations evals/manual_annotations_template.json
+```
 
-Tools: `search_corpus`, `lookup_clause`, `get_request_fields`. Current graph hand-off is explicit and bounded by LangGraph recursion limit; each queue job has a 90-second timeout by default. If a worker/provider fails, the job is marked failed and no confident answer is returned. This starter uses no external LLM provider, so provider circuit breaker and token-cost measurements are not applicable yet; add them when integrating a provider, with timeout/retry/backoff/circuit-breaker tests.
+---
 
-## Recommendation routes
+## 5. Performance and Load Testing
 
-- `clear-for-filing`: only when applicable official heading/rules/notes support a verified classification. This starter does not automatically emit this route.
-- `seek-product-clarification`: required product facts are missing or ambiguous.
-- `specialist-classification-review`: unsupported scope, competing headings, absent named-article evidence, or unresolved legal interpretation.
+Performance testing is fully reproducible using `benchmarks/run_load_test.py`:
 
-The output is a proposed classification only, never permission to file. Do not implement a fallback that guesses a code.
+```powershell
+.venv\Scripts\python.exe benchmarks/run_load_test.py --url http://localhost:8001
+```
 
-## Corpus indexing / freshness
+### Latest Saved Benchmark Results
+`benchmarks/load_test_results.json` was recorded at 2026-10-12 19:03 UTC against `http://localhost:8001`. The workload was bounded and small: 20 health requests at each of concurrency 1 and 3; six submissions at concurrency 2; then a 61-second cooldown followed by three E2E jobs at concurrency 1 and four at concurrency 2.
 
-The starter reads local text files at run time and exports `export_corpus_chunks`; the corpus README is excluded. Retrieval is lexical token overlap, not semantic/vector retrieval: it can return passages that share common words but do not substantively support the product classification. Citation verification currently checks that cited passage IDs resolve to non-empty indexed text; it does not assess legal authority, passage relevance, entailment, source freshness, or whether every claim is supported. A `verification_passed` value therefore means only that this narrow ID/existence check passed. Manually review source authority, passage relevance, and claim support. For production coursework completion, implement a CLI ingestion pipeline with document hashes, source versions, timestamps, OCR for scanned documents, section/chapter-note metadata, stable chunk IDs, incremental embeddings and Chroma/FAISS persistence.
+| Workload | Concurrency | Requests/jobs | Throughput | Median | p95 | Errors |
+|---|---:|---:|---:|---:|---:|---:|
+| GET `/health` | 1 | 20 | 82.52 req/s | 7.63 ms | 29.82 ms | 0 |
+| GET `/health` | 3 | 20 | 230.19 req/s | 9.07 ms | 23.28 ms | 0 |
+| POST `/v1/runs` | 2 | 6 | 94.26 req/s | 20.02 ms | 34.36 ms | 0 |
+| Async E2E | 1 | 3 | 0.93 jobs/s | 1.051 s | 1.060 s | 0 |
+| Async E2E | 2 | 4 | 0.95 jobs/s | 1.568 s | 2.605 s | 0 |
 
-## Evaluation
+E2E worker median/queue-wait median were 0.8243/0.203 s at concurrency 1 and 0.8254/0.728 s at concurrency 2. The artifact retains earlier E2E measurements under `previous_e2e_benchmark` and `previous_e2e_benchmark_history`. Samples are small and are not a production capacity guarantee.
 
-`evals/scenarios.json` contains 20 starter cases, expected safe routes, and rationales. These are **test hypotheses, not legally adjudicated gold HS codes**. Run your batch evaluator after adding the official corpus. Record, at minimum:
+---
 
-- Groundedness = claims supported by cited corpus passages / total factual claims reviewed.
-- Context relevance = relevant retrieved passages / all retrieved passages, manually labelled or by a documented evaluator.
-- Faithfulness = answer claims entailed by context / answer claims evaluated.
-- Hallucination rate = unsupported factual claims / all factual claims evaluated.
+## 6. Automated Test Suite
 
-Compare at least two versioned prompts on the same fixed set, then make one deliberate change and report all four metrics before/after. Do not claim results before running the evaluator. `prompt_version` is returned with each run.
+Run the full automated test suite (including worker-metric aggregation coverage):
 
-## Observability / load testing
+```powershell
+.venv\Scripts\python.exe -m pytest -v
+```
 
-Prometheus scrapes `/metrics`. Add dashboards for end-to-end p50/p95, error rate, throughput, availability and container resources. Grafana is at port 3000 (`admin` / `.env` password). Declare your target before testing; suggested starting target for the report: **p95 <= 30 seconds from submission to final result at concurrency 5**, justified as an interactive analyst workflow, then measure rather than assuming it is met. Use Locust with a fixed-delay stub instead of a live LLM so results measure the service. Test concurrency steps (1, 5, 10, 20), and compare one worker vs `docker compose up --build --scale agent-worker=3`; report RPS, p50, p95, failure point and bottleneck. A Locust journey script is included, but a separate deterministic model-stub service and measured load results remain incomplete.
+### Test Coverage Breakdown
+- `test_contract.py`: Pydantic schema validation, country cross-checks, bounds.
+- `test_guardrails.py`: Input prompt-injection detection and threat quarantine.
+- `test_run_status.py`: Public run ID resolution, Redis caching, RQ enum translation.
+- `test_evidence_verification.py`: Fail-closed verification, citation resolution, lexical filter.
+- `test_evaluation_quality.py`: Metric aggregation, missing field handling, annotation schema validation.
+- `test_performance.py`: Benchmark latency calculations, rate-limit metric tracking.
+- `test_reliability.py`: Redis failure handling, worker exceptions, 422 quarantine, `/live` and `/ready` probes.
 
-## Tests
+---
 
-For local tests, prefer a clean Python 3.11 virtual environment to avoid conflicts with packages already installed in Anaconda. Install `requirements.txt` and `pytest`, then run `python -m pytest -q`. Tests cover deterministic guardrails, public-run-ID to queue-job-ID lookup, completed-result retrieval, evaluation retry handling, and honest failure reporting. They do not prove tariff correctness, retrieval quality, or multi-container behaviour. Also run `docker compose config` and the 10-item live demonstration checklist from the assignment.
+## 7. Known Limitations & Next Steps
 
-## Runbook
-
-### Failure mode 1 — request remains queued
-- **Symptom:** status stays queued; API reports Redis unavailable or worker logs show connection errors.
-- **Confirm:** `docker compose ps`, `docker compose logs redis agent-worker api`, `Invoke-RestMethod http://localhost:8000/health`.
-- **Recover:** `docker compose restart redis agent-worker api`; retry only after health is green. Do not manually claim a failed job completed.
-
-### Failure mode 2 — no citation / unexpected escalation
-- **Symptom:** no citations or specialist review for an otherwise familiar item.
-- **Confirm:** inspect the returned `citations`, `steps`, worker logs, corpus files, source version and `/metrics` corpus chunk gauge.
-- **Recover:** obtain the current official CBIC/DGFT source, extract text with notes/headings preserved, place it under `corpus/`, restart workers, and rerun the fixed evaluation set. Never fix this by hardcoding a desired HS code.
-
-## Incident log
-
-Append genuine development incidents with timestamp, observed symptom, reproduction, root cause, fix and verification. `INCIDENT_LOG.md` records the genuine missing-Redis dependency failure seen during local test collection and the verification performed at that time.
-
-## Known limitations / next steps
-
-- Official source corpus must be supplied and verified.
-- Retrieval is lexical rather than vector-based; integrate Chroma/FAISS and local embeddings.
-- Add provider abstraction, model timeout/retry with exponential backoff, circuit breaker and provider-down demo if an LLM is added.
-- Persist full run traces and per-step cost/tokens; current traces contain tool/query/passage IDs but do not calculate LLM cost.
-- Add OCR, idempotent vector ingestion CLI, separate deterministic model-stub service, prompt A/B evaluator, comprehensive toxicity/injection controls, and dashboard provisioning.
-- Feedback is stored in Redis when available; otherwise in-process fallback is not durable.
-- Rate limiting is an in-memory per-API-process demonstration, not a distributed production limiter.
-
-### Load test and batch evaluation helpers
-
-- Install Locust in a test environment (`pip install locust`) and run `locust -f locustfile.py --host http://localhost:8000`. The script submits and polls, so the reported user journey includes final completion. Repeat with one worker and with `docker compose up --build --scale agent-worker=3 -d` and save each report.
-- With the stack running, run `python evals/run_batch.py` from the repository root in a Python environment with network access to localhost. It keeps the API rate limit enabled, spaces submissions below the default 10/minute limit, retries HTTP 429 and temporary server errors with bounded backoff (honouring `Retry-After`), and records failures without counting them as route matches. It writes all raw scenario results to `evals/latest_results.json` and prints a per-scenario summary. Route match is not legal correctness. Inspect every failure and manually label passage relevance and claim support before reporting groundedness, context relevance, faithfulness, or hallucination rate.
+1. **Official Tariff Corpus**: The bundled `corpus/` contains starter text. Official CBIC/DGFT schedules must be imported before commercial deployment.
+2. **Dense Retrieval (Chroma / FAISS)**: Current retrieval uses lexical keyword overlap. A dense vector index with domain embeddings would improve semantic recall.
+3. **External LLM Integration**: The current agent topology is deterministic rule-based. Connecting external LLMs will require circuit breakers, backoff retry policies, and token cost accounting.
+4. **Distributed Rate Limiting**: The in-memory sliding window should be backed by Redis sorted sets in clustered multi-instance deployments.
