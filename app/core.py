@@ -59,6 +59,11 @@ class AgentState(TypedDict, total=False):
     citations: list
     steps: list
     prompt_version: str
+    citation_resolution_passed: bool
+    evidence_relevance_passed: bool
+    evidence_relevance_result: dict
+    classification_support_passed: bool
+    verification_scope: str
     error: str
 
 def _agent_pipeline(state: AgentState) -> AgentState:
@@ -228,17 +233,52 @@ _EVIDENCE_STOPWORDS = {
     'would', 'you', 'your', 'yours', 'yourself', 'yourselves',
 }
 
+_EVIDENCE_MATERIAL_TERMS = {
+    'acrylic', 'alloy', 'aluminium', 'aluminum', 'brass', 'bronze', 'carbon',
+    'cast', 'ceramic', 'cement', 'composite', 'concrete', 'copper', 'cotton',
+    'fabric', 'fibre', 'fiber', 'glass', 'gold', 'iron', 'leather', 'linen',
+    'metal', 'metallic', 'nickel', 'nylon', 'paper', 'plastic', 'polyester',
+    'porcelain', 'rubber', 'silk', 'silver', 'stainless', 'steel', 'synthetic',
+    'textile', 'timber', 'titanium', 'wood', 'wool',
+}
+
+_EVIDENCE_GENERIC_TERMS = {
+    'article', 'body', 'goods', 'household', 'inner', 'item', 'manufactured',
+    'moulded', 'object', 'outer', 'product', 'purpose', 'shell', 'thing',
+    'unknown', 'unspecified',
+}
+
+_CITATION_EXCERPT_LENGTH = 900
+_VERIFICATION_SCOPE = (
+    'Citation resolution and preliminary lexical relevance only; '
+    'not semantic entailment, classification support, or legal correctness.'
+)
+
 
 def _assess_evidence_relevance(request: dict, passages: list) -> dict:
-    """Assess lexical overlap only; it is not proof of semantic or legal classification support."""
+    """Use lexical overlap as a preliminary check, not semantic or legal classification proof."""
+    def normalized_terms(text: str) -> set:
+        terms = set()
+        for term in re.findall(r'[a-z0-9]+', text.lower()):
+            if term.endswith('ies') and len(term) > 4:
+                term = term[:-3] + 'y'
+            elif term.endswith(('ches', 'shes', 'xes', 'zes', 'sses')) and len(term) > 4:
+                term = term[:-2]
+            elif (
+                term.endswith('s')
+                and not term.endswith(('ss', 'os', 'us', 'is'))
+                and len(term) > 3
+            ):
+                term = term[:-1]
+            if len(term) >= 3 and term not in _EVIDENCE_STOPWORDS:
+                terms.add(term)
+        return terms
+
     request_text = ' '.join(
         str(request.get(field) or '')
         for field in ('description', 'materials', 'intended_use')
     )
-    requested_terms = {
-        term for term in re.findall(r'[a-z0-9]+', request_text.lower())
-        if len(term) >= 3 and term not in _EVIDENCE_STOPWORDS
-    }
+    requested_terms = normalized_terms(request_text)
     if not requested_terms:
         return {
             'passed': False,
@@ -247,15 +287,27 @@ def _assess_evidence_relevance(request: dict, passages: list) -> dict:
             'relevant_passage_ids': [],
         }
 
-    minimum_matches = 1 if len(requested_terms) == 1 else 2
+    material_terms = normalized_terms(str(request.get('materials') or ''))
+    product_terms = (
+        requested_terms
+        - material_terms
+        - _EVIDENCE_MATERIAL_TERMS
+        - _EVIDENCE_GENERIC_TERMS
+    )
+    if not product_terms:
+        return {
+            'passed': False,
+            'requested_terms': sorted(requested_terms),
+            'matched_terms': [],
+            'relevant_passage_ids': [],
+        }
+
+    minimum_matches = 1 if len(product_terms) == 1 else 2
     matched_terms = set()
     relevant_passage_ids = []
     for passage in passages:
-        passage_terms = {
-            term for term in re.findall(r'[a-z0-9]+', str(passage.get('text') or '').lower())
-            if len(term) >= 3 and term not in _EVIDENCE_STOPWORDS
-        }
-        overlap = requested_terms & passage_terms
+        passage_terms = normalized_terms(str(passage.get('text') or ''))
+        overlap = product_terms & passage_terms
         if len(overlap) >= minimum_matches:
             matched_terms.update(overlap)
             relevant_passage_ids.append(passage['id'])
@@ -269,6 +321,7 @@ def _assess_evidence_relevance(request: dict, passages: list) -> dict:
 
 
 def _verify(state: AgentState) -> AgentState:
+    """Verify citation resolution and preliminary lexical relevance only."""
     passages = state.get('passages', [])
     canonical_passages = {p['id']: p for p in load_passages()}
     citations = [p['id'] for p in passages if p['id'] in canonical_passages]
@@ -282,11 +335,20 @@ def _verify(state: AgentState) -> AgentState:
         for cid in citations
         if cid in canonical_passages and canonical_passages[cid]['text'].strip()
     ]
+    cited_excerpts = [
+        {
+            **passage,
+            'text': passage['text'][:_CITATION_EXCERPT_LENGTH],
+        }
+        for passage in relevant_passages
+    ]
     evidence_relevance = _assess_evidence_relevance(
         state.get('request', {}),
-        relevant_passages,
+        cited_excerpts,
     )
     evidence_relevance_passed = evidence_relevance['passed']
+    proposed_code = state.get('proposed_code')
+    classification_support_passed = False
     verified = citation_resolution_passed and evidence_relevance_passed
 
     if not citation_resolution_passed:
@@ -298,12 +360,12 @@ def _verify(state: AgentState) -> AgentState:
                 'Verification failed; fail-closed escalation applied.'
             ],
         )
-    elif state.get('proposed_code') and not evidence_relevance_passed:
+    elif proposed_code and not classification_support_passed:
         state.update(
             proposed_code=None,
             route='specialist-classification-review',
             warnings=state.get('warnings', []) + [
-                'Evidence relevance check failed; proposed code cleared and specialist review required.'
+                'Lexical relevance is preliminary and does not establish classification support; proposed code cleared for specialist review.'
             ],
         )
 
@@ -315,6 +377,8 @@ def _verify(state: AgentState) -> AgentState:
         citation_resolution_passed=citation_resolution_passed,
         evidence_relevance_passed=evidence_relevance_passed,
         evidence_relevance_result=evidence_relevance,
+        classification_support_passed=classification_support_passed,
+        verification_scope=_VERIFICATION_SCOPE,
         prompt_version=state.get('prompt_version', 'classification-v1'),
     )
     state.setdefault('steps', []).append({
@@ -323,6 +387,8 @@ def _verify(state: AgentState) -> AgentState:
         'citation_ids': citations,
         'citation_resolution_passed': citation_resolution_passed,
         'evidence_relevance_passed': evidence_relevance_passed,
+        'classification_support_passed': classification_support_passed,
+        'verification_scope': _VERIFICATION_SCOPE,
     })
     return state
 
@@ -338,7 +404,7 @@ def run_classification(request: dict, run_id: str):
         graph.add_node('verification_agent',_verify)
         graph.set_entry_point('research_agent'); graph.add_edge('research_agent','classification_agent'); graph.add_edge('classification_agent','verification_agent'); graph.add_edge('verification_agent',END)
         result=graph.compile().invoke(state, config={'recursion_limit':8})
-        out={'run_id':run_id,'status':'completed','recommendation':result.get('route','specialist-classification-review'),'proposed_hs_code':result.get('proposed_code'),'rationale':result.get('rationale'),'citations':[{'passage_id':p['id'],'source':p['source'],'excerpt':p['text'][:900]} for p in result.get('passages',[]) if p['id'] in result.get('citations',[])],'verification_passed':result.get('verified',False),'prompt_version':result.get('prompt_version'),'steps':result.get('steps',[]),'warnings':result.get('warnings',[]),'duration_seconds':round(time.monotonic()-started,4),'disclaimer':'Proposed decision support only. Not a customs ruling or authorization to file a declaration.'}
+        out={'run_id':run_id,'status':'completed','recommendation':result.get('route','specialist-classification-review'),'proposed_hs_code':result.get('proposed_code'),'rationale':result.get('rationale'),'citations':[{'passage_id':p['id'],'source':p['source'],'excerpt':p['text'][:_CITATION_EXCERPT_LENGTH]} for p in result.get('passages',[]) if p['id'] in result.get('citations',[])],'verification_passed':result.get('verified',False),'classification_support_passed':result.get('classification_support_passed',False),'verification_scope':result.get('verification_scope',_VERIFICATION_SCOPE),'prompt_version':result.get('prompt_version'),'steps':result.get('steps',[]),'warnings':result.get('warnings',[]),'duration_seconds':round(time.monotonic()-started,4),'disclaimer':'Proposed decision support only. Not a customs ruling or authorization to file a declaration.'}
         RUNS[run_id]=out
         try:
             from redis import Redis
@@ -348,7 +414,7 @@ def run_classification(request: dict, run_id: str):
         return out
     except Exception as exc:
         logger.exception('run failed',extra={'run_id':run_id})
-        out={'run_id':run_id,'status':'failed','recommendation':'specialist-classification-review','proposed_hs_code':None,'rationale':'The pipeline failed or timed out. No confident answer was returned.','citations':[],'verification_passed':False,'error_type':type(exc).__name__,'disclaimer':'No customs filing decision may be made from this failed run.'}
+        out={'run_id':run_id,'status':'failed','recommendation':'specialist-classification-review','proposed_hs_code':None,'rationale':'The pipeline failed or timed out. No confident answer was returned.','citations':[],'verification_passed':False,'classification_support_passed':False,'verification_scope':_VERIFICATION_SCOPE,'error_type':type(exc).__name__,'disclaimer':'No customs filing decision may be made from this failed run.'}
         RUNS[run_id]=out
         try:
             from redis import Redis
