@@ -1,6 +1,6 @@
 # GitHub delivery
 
-Project repository: https://github.com/Harika-S-git/new_proj
+Project repository: https://github.com/Harika-S-git/Export-classification-service
 
 The dist/ folder contains the complete project ZIP; docs/ contains the report and slides.
 The repository also contains the source, corpus, evidence and deployment files.

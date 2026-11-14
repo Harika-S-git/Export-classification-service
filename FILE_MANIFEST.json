@@ -25,8 +25,8 @@
       "bytes": 1330
     },
     "README.md": {
-      "sha256": "80856f17cc48b244669163bd37a79074e98651ca688fe58cb88d77e81b5cc656",
-      "bytes": 7118
+      "sha256": "9222e83c9dcf48b5a327ea3c262145905db523fe51b694ce3163d4d91e26a50c",
+      "bytes": 7202
     },
     "START_HERE.md": {
       "sha256": "98f4be30231479008266704486d86dd7b1a3cdfd2c55e38c15285cfb4033d0f8",
@@ -145,8 +145,8 @@
       "bytes": 2874
     },
     "docs/DELIVERY.md": {
-      "sha256": "4a0fd98d103a36a8709b918931643c3f64996dc1ef7815f18d99d64094583d37",
-      "bytes": 570
+      "sha256": "bd8a7d2ea040bed3406a5fe1ee68cbf2b3b95aeb48026447ccc6f3fdff39bfa3",
+      "bytes": 591
     },
     "docs/DEMO_AND_VIVA.md": {
       "sha256": "8b826b03323b3171e09031d29924f62effccafb1409c260d3ca2e1022edd7ce0",
@@ -193,8 +193,8 @@
       "bytes": 941
     },
     "docs/TEAM.md": {
-      "sha256": "95093d358a798f4a5e1d1fb86bdc68824542233dc277f8cc3d04b2d9e8863a33",
-      "bytes": 690
+      "sha256": "b14e0051972b6b1102543be71bb5bf23749d82a8b27ef5100f5760a5c4c5148f",
+      "bytes": 711
     },
     "docs/architecture.svg": {
       "sha256": "da2b0ae0d30e0bb0d3a598870d3ebe4c2d721f71901b3e6eac00d7e94fb86e6e",
