@@ -1,0 +1,594 @@
+{
+  "Submission": {
+    "$defs": {
+      "Material": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "enum": [
+              "stainless_steel",
+              "steel",
+              "iron",
+              "plastic",
+              "glass",
+              "wood",
+              "other"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "percent": {
+            "exclusiveMinimum": 0,
+            "maximum": 100,
+            "title": "Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "percent"
+        ],
+        "title": "Material",
+        "type": "object"
+      },
+      "Product": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Description",
+            "type": "string"
+          },
+          "intended_use": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Intended Use",
+            "type": "string"
+          },
+          "materials": {
+            "items": {
+              "$ref": "#/$defs/Material"
+            },
+            "maxItems": 8,
+            "title": "Materials",
+            "type": "array"
+          },
+          "capacity_l": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Capacity L"
+          },
+          "vacuum_insulated": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Vacuum Insulated"
+          },
+          "complete": {
+            "default": true,
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "destination": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Destination",
+            "type": "string"
+          },
+          "quantity": {
+            "default": 1,
+            "maximum": 1000000,
+            "minimum": 1,
+            "title": "Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "description"
+        ],
+        "title": "Product",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "product": {
+        "$ref": "#/$defs/Product"
+      },
+      "prompt_version": {
+        "default": "v2",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "title": "Prompt Version",
+        "type": "string"
+      },
+      "cache": {
+        "default": true,
+        "title": "Cache",
+        "type": "boolean"
+      },
+      "nonce": {
+        "default": "",
+        "maxLength": 64,
+        "pattern": "^[a-zA-Z0-9_-]*$",
+        "title": "Nonce",
+        "type": "string"
+      },
+      "fault": {
+        "default": "none",
+        "enum": [
+          "none",
+          "unsupported",
+          "timeout",
+          "provider_down",
+          "verifier_down"
+        ],
+        "title": "Fault",
+        "type": "string"
+      }
+    },
+    "required": [
+      "product"
+    ],
+    "title": "Submission",
+    "type": "object"
+  },
+  "Product": {
+    "$defs": {
+      "Material": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "enum": [
+              "stainless_steel",
+              "steel",
+              "iron",
+              "plastic",
+              "glass",
+              "wood",
+              "other"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "percent": {
+            "exclusiveMinimum": 0,
+            "maximum": 100,
+            "title": "Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "percent"
+        ],
+        "title": "Material",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "maxLength": 2000,
+        "minLength": 10,
+        "title": "Description",
+        "type": "string"
+      },
+      "intended_use": {
+        "default": "",
+        "maxLength": 300,
+        "title": "Intended Use",
+        "type": "string"
+      },
+      "materials": {
+        "items": {
+          "$ref": "#/$defs/Material"
+        },
+        "maxItems": 8,
+        "title": "Materials",
+        "type": "array"
+      },
+      "capacity_l": {
+        "anyOf": [
+          {
+            "exclusiveMinimum": 0,
+            "maximum": 100,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Capacity L"
+      },
+      "vacuum_insulated": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Vacuum Insulated"
+      },
+      "complete": {
+        "default": true,
+        "title": "Complete",
+        "type": "boolean"
+      },
+      "destination": {
+        "default": "US",
+        "pattern": "^[A-Z]{2}$",
+        "title": "Destination",
+        "type": "string"
+      },
+      "quantity": {
+        "default": 1,
+        "maximum": 1000000,
+        "minimum": 1,
+        "title": "Quantity",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "description"
+    ],
+    "title": "Product",
+    "type": "object"
+  },
+  "Recommendation": {
+    "$defs": {
+      "Citation": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text",
+          "source",
+          "page",
+          "sha256"
+        ],
+        "title": "Citation",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "heading": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Heading"
+      },
+      "tariff_item": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Tariff Item"
+      },
+      "rule": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rule"
+      },
+      "route": {
+        "enum": [
+          "clear-for-filing",
+          "seek-product-clarification",
+          "specialist-classification-review"
+        ],
+        "title": "Route",
+        "type": "string"
+      },
+      "basis": {
+        "title": "Basis",
+        "type": "string"
+      },
+      "export_policy": {
+        "default": "unconfirmed",
+        "title": "Export Policy",
+        "type": "string"
+      },
+      "citations": {
+        "items": {
+          "$ref": "#/$defs/Citation"
+        },
+        "title": "Citations",
+        "type": "array"
+      },
+      "verified": {
+        "default": false,
+        "title": "Verified",
+        "type": "boolean"
+      },
+      "proposed_only": {
+        "default": true,
+        "title": "Proposed Only",
+        "type": "boolean"
+      },
+      "disclaimer": {
+        "default": "Proposed classification only. A licensed customs broker decides; this service never files a declaration.",
+        "title": "Disclaimer",
+        "type": "string"
+      },
+      "prompt_version": {
+        "title": "Prompt Version",
+        "type": "string"
+      },
+      "mode": {
+        "title": "Mode",
+        "type": "string"
+      },
+      "entities": {
+        "additionalProperties": true,
+        "title": "Entities",
+        "type": "object"
+      },
+      "cost_usd": {
+        "default": 0,
+        "title": "Cost Usd",
+        "type": "number"
+      },
+      "prompt_tokens": {
+        "default": 0,
+        "title": "Prompt Tokens",
+        "type": "integer"
+      },
+      "completion_tokens": {
+        "default": 0,
+        "title": "Completion Tokens",
+        "type": "integer"
+      },
+      "cache_hit": {
+        "default": false,
+        "title": "Cache Hit",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "route",
+      "basis",
+      "prompt_version",
+      "mode"
+    ],
+    "title": "Recommendation",
+    "type": "object"
+  },
+  "Feedback": {
+    "additionalProperties": false,
+    "properties": {
+      "satisfactory": {
+        "title": "Satisfactory",
+        "type": "boolean"
+      },
+      "reason": {
+        "maxLength": 500,
+        "minLength": 3,
+        "title": "Reason",
+        "type": "string"
+      }
+    },
+    "required": [
+      "satisfactory",
+      "reason"
+    ],
+    "title": "Feedback",
+    "type": "object"
+  },
+  "VerifyRequest": {
+    "$defs": {
+      "Material": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "enum": [
+              "stainless_steel",
+              "steel",
+              "iron",
+              "plastic",
+              "glass",
+              "wood",
+              "other"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "percent": {
+            "exclusiveMinimum": 0,
+            "maximum": 100,
+            "title": "Percent",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "percent"
+        ],
+        "title": "Material",
+        "type": "object"
+      },
+      "Product": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Description",
+            "type": "string"
+          },
+          "intended_use": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Intended Use",
+            "type": "string"
+          },
+          "materials": {
+            "items": {
+              "$ref": "#/$defs/Material"
+            },
+            "maxItems": 8,
+            "title": "Materials",
+            "type": "array"
+          },
+          "capacity_l": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Capacity L"
+          },
+          "vacuum_insulated": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Vacuum Insulated"
+          },
+          "complete": {
+            "default": true,
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "destination": {
+            "default": "US",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Destination",
+            "type": "string"
+          },
+          "quantity": {
+            "default": 1,
+            "maximum": 1000000,
+            "minimum": 1,
+            "title": "Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "description"
+        ],
+        "title": "Product",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "pattern": "^[a-f0-9-]{36}$",
+        "title": "Run Id",
+        "type": "string"
+      },
+      "product": {
+        "$ref": "#/$defs/Product"
+      },
+      "proposed": {
+        "additionalProperties": true,
+        "title": "Proposed",
+        "type": "object"
+      },
+      "evidence": {
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "maxItems": 200,
+        "title": "Evidence",
+        "type": "array"
+      },
+      "prompt_version": {
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "title": "Prompt Version",
+        "type": "string"
+      },
+      "fault": {
+        "default": "none",
+        "title": "Fault",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id",
+      "product",
+      "proposed",
+      "evidence",
+      "prompt_version"
+    ],
+    "title": "VerifyRequest",
+    "type": "object"
+  }
+}

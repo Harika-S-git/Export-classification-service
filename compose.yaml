@@ -1,0 +1,133 @@
+x-app: &app
+  build: .
+  image: export-check:local
+  env_file: .env
+  init: true
+  environment:
+    NO_PROXY: redis,api,verifier,provider-stub,jaeger,localhost,127.0.0.1
+    no_proxy: redis,api,verifier,provider-stub,jaeger,localhost,127.0.0.1
+  volumes:
+    - index:/data
+  restart: unless-stopped
+  networks: [trade]
+  security_opt: [no-new-privileges:true]
+  healthcheck: &health
+    test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)"]
+    interval: 10s
+    timeout: 5s
+    start_period: 20s
+    retries: 10
+services:
+  redis:
+    image: redis:7.4-alpine
+    command: [redis-server, --appendonly, 'yes', --appendfsync, everysec]
+    volumes: [redis-data:/data]
+    networks: [trade]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  indexer:
+    <<: *app
+    command: [python, -m, tools.index]
+    restart: 'no'
+    healthcheck: {disable: true}
+  api:
+    <<: *app
+    command: [python, -m, uvicorn, app.api:app, --host, 0.0.0.0, --port, '8000']
+    ports: ['127.0.0.1:${APP_PORT:-8000}:8000']
+    depends_on:
+      redis: {condition: service_healthy}
+      indexer: {condition: service_completed_successfully}
+      verifier: {condition: service_healthy}
+  classifier-worker:
+    <<: *app
+    command: [python, -m, app.worker]
+    healthcheck:
+      <<: *health
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9100/health',timeout=3)"]
+    depends_on:
+      redis: {condition: service_healthy}
+      verifier: {condition: service_healthy}
+      indexer: {condition: service_completed_successfully}
+  verifier:
+    <<: *app
+    command: [python, -m, uvicorn, app.verifier:app, --host, 0.0.0.0, --port, '8001']
+    healthcheck:
+      <<: *health
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health',timeout=3)"]
+    depends_on:
+      redis: {condition: service_healthy}
+      indexer: {condition: service_completed_successfully}
+      provider-stub: {condition: service_healthy}
+  provider-stub:
+    <<: *app
+    command: [python, -m, uvicorn, app.stub:app, --host, 0.0.0.0, --port, '8002']
+    healthcheck:
+      <<: *health
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health',timeout=3)"]
+  jaeger:
+    image: jaegertracing/all-in-one:1.76.0
+    environment: {COLLECTOR_OTLP_ENABLED: 'true'}
+    ports: ['127.0.0.1:${JAEGER_PORT:-16686}:16686']
+    networks: [trade]
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    command: [--config.file=/etc/prometheus/prometheus.yml, --web.enable-lifecycle]
+    volumes: ['./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro', 'prometheus-data:/prometheus']
+    ports: ['127.0.0.1:${PROMETHEUS_PORT:-9090}:9090']
+    networks: [trade]
+    depends_on: [api, cadvisor, redis-exporter]
+    healthcheck:
+      test: [CMD, wget, -qO-, 'http://localhost:9090/-/ready']
+      interval: 15s
+      timeout: 3s
+      retries: 10
+  grafana:
+    image: grafana/grafana:12.1.1
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+    volumes: ['./observability/grafana/provisioning:/etc/grafana/provisioning:ro', './observability/grafana/dashboards:/var/lib/grafana/dashboards:ro', 'grafana-data:/var/lib/grafana']
+    ports: ['127.0.0.1:${GRAFANA_PORT:-3000}:3000']
+    networks: [trade]
+    depends_on: {prometheus: {condition: service_healthy}}
+    healthcheck:
+      test: [CMD, wget, -qO-, 'http://localhost:3000/api/health']
+      interval: 15s
+      timeout: 3s
+      retries: 10
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    volumes: ['/:/rootfs:ro', '/var/run:/var/run:ro', '/sys:/sys:ro', '/var/lib/docker:/var/lib/docker:ro']
+    networks: [trade]
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.77.0
+    environment: {REDIS_ADDR: '${REDIS_URL}'}
+    networks: [trade]
+    depends_on: {redis: {condition: service_healthy}}
+  toolbox:
+    <<: *app
+    profiles: [tools]
+    user: '0'
+    volumes: [index:/data, './results:/app/results']
+    command: [python, -m, tools.evaluate]
+    healthcheck: {disable: true}
+    depends_on: {api: {condition: service_healthy}}
+  locust:
+    image: locustio/locust:2.47.0
+    profiles: [load]
+    volumes: ['./eval:/mnt/locust:ro','./results:/results']
+    entrypoint: [locust, -f, /mnt/locust/locustfile.py]
+    environment: {LOAD_HOST: 'http://api:8000'}
+    networks: [trade]
+    depends_on: {api: {condition: service_healthy}}
+volumes:
+  index:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+networks:
+  trade:

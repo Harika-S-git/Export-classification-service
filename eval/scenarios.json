@@ -1,0 +1,534 @@
+[
+  {
+    "id": "01-reference",
+    "product": {
+      "description": "Stainless steel vacuum flask with a moulded plastic outer body."
+    },
+    "expected": {
+      "heading": "9617",
+      "route": "seek-product-clarification"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9617",
+      "P9617"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "02-flask-small",
+    "product": {
+      "description": "Complete stainless steel vacuum flask with plastic casing",
+      "capacity_l": 0.5
+    },
+    "expected": {
+      "heading": "9617",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9617",
+      "P9617"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "03-flask-large",
+    "product": {
+      "description": "Stainless steel vacuum bottle for hot drinks",
+      "capacity_l": 1
+    },
+    "expected": {
+      "heading": "9617",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9617",
+      "P9617"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "04-flask-boundary",
+    "product": {
+      "description": "Complete vacuum flask made of stainless steel",
+      "capacity_l": 0.75
+    },
+    "expected": {
+      "heading": "9617",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9617",
+      "P9617"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "05-flask-over",
+    "product": {
+      "description": "Complete vacuum flask made of stainless steel",
+      "capacity_l": 0.751
+    },
+    "expected": {
+      "heading": "9617",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9617",
+      "P9617"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "06-buttons-metal",
+    "product": {
+      "description": "Base metal buttons for garments"
+    },
+    "expected": {
+      "heading": "9606",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9606",
+      "P9606"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "07-buttons-plastic",
+    "product": {
+      "description": "Plastic buttons for shirts"
+    },
+    "expected": {
+      "heading": "9606",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9606",
+      "P9606"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "08-pen",
+    "product": {
+      "description": "Ball point pen with a steel body"
+    },
+    "expected": {
+      "heading": "9608",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9608",
+      "P9608"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "09-pencil",
+    "product": {
+      "description": "Wooden pencil for writing"
+    },
+    "expected": {
+      "heading": "9609",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9609",
+      "P9609"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "10-toothbrush",
+    "product": {
+      "description": "Manual plastic toothbrush for household use"
+    },
+    "expected": {
+      "heading": "9603",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9603",
+      "P9603"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "11-comb",
+    "product": {
+      "description": "Plastic comb for grooming hair"
+    },
+    "expected": {
+      "heading": "9615",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9615",
+      "P9615"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "12-zipper",
+    "product": {
+      "description": "Slide fastener for jackets"
+    },
+    "expected": {
+      "heading": "9607",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H9607",
+      "P9607"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "13-bolt",
+    "product": {
+      "description": "Steel bolts for general construction"
+    },
+    "expected": {
+      "heading": "7318",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7318",
+      "P7318"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "14-screw",
+    "product": {
+      "description": "Stainless steel screws for household repair"
+    },
+    "expected": {
+      "heading": "7318",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7318",
+      "P7318"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "15-nut",
+    "product": {
+      "description": "Steel nuts for fastening bolts"
+    },
+    "expected": {
+      "heading": "7318",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7318",
+      "P7318"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "16-nail",
+    "product": {
+      "description": "Iron nails for woodworking"
+    },
+    "expected": {
+      "heading": "7317",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7317",
+      "P7317"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "17-chain",
+    "product": {
+      "description": "Steel chain for lifting goods"
+    },
+    "expected": {
+      "heading": "7315",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7315",
+      "P7315"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "18-pipe-fitting",
+    "product": {
+      "description": "Stainless steel pipe fitting elbow"
+    },
+    "expected": {
+      "heading": "7307",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7307",
+      "P7307"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "19-saucepan",
+    "product": {
+      "description": "Stainless steel saucepan for cooking"
+    },
+    "expected": {
+      "heading": "7323",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7323",
+      "P7323"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "20-scourer",
+    "product": {
+      "description": "Steel wool scouring pad for washing pots"
+    },
+    "expected": {
+      "heading": "7323",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7323",
+      "P7323"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "21-sewing-needle",
+    "product": {
+      "description": "Steel sewing needle for use by hand"
+    },
+    "expected": {
+      "heading": "7319",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7319",
+      "P7319"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "22-padlock",
+    "product": {
+      "description": "Steel padlock for warehouse doors"
+    },
+    "expected": {
+      "heading": null,
+      "route": "specialist-classification-review"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "23-glass-inner",
+    "product": {
+      "description": "Glass inner for a vacuum flask"
+    },
+    "expected": {
+      "heading": null,
+      "route": "specialist-classification-review"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "24-cosmetic-pencil",
+    "product": {
+      "description": "Cosmetic pencil for use on skin"
+    },
+    "expected": {
+      "heading": null,
+      "route": "specialist-classification-review"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "25-electric-toothbrush",
+    "product": {
+      "description": "Electric toothbrush with a motor"
+    },
+    "expected": {
+      "heading": null,
+      "route": "specialist-classification-review"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "26-unidentified",
+    "product": {
+      "description": "Manufactured metal article of unknown purpose"
+    },
+    "expected": {
+      "heading": null,
+      "route": "seek-product-clarification"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "27-composite-equal",
+    "product": {
+      "description": "Combined pen and toothbrush with equal function and no essential character"
+    },
+    "expected": {
+      "heading": null,
+      "route": "specialist-classification-review"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "SCOPE",
+      "GRI2",
+      "GRI3"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  },
+  {
+    "id": "28-non-vacuum",
+    "product": {
+      "description": "Stainless steel non-vacuum bottle for household use"
+    },
+    "expected": {
+      "heading": "7323",
+      "route": "clear-for-filing"
+    },
+    "support": [
+      "GRI1",
+      "N15",
+      "N73",
+      "N96",
+      "H7323",
+      "P7323"
+    ],
+    "rationale": "Frozen-snapshot evaluation; clear-for-filing requires POLICY_SNAPSHOT_CONFIRMED=true, and remains a proposed heading for broker review."
+  }
+]

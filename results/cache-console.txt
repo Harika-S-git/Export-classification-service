@@ -1,0 +1,16 @@
+{
+  "uncached": {
+    "n": 12,
+    "p50_seconds": 1.9592104845000904,
+    "p95_seconds": 2.576855413999965,
+    "mean_cost_usd": 0.0,
+    "mean_prompt_tokens": 31531
+  },
+  "warm_cached": {
+    "n": 11,
+    "p50_seconds": 0.03101387500009878,
+    "p95_seconds": 0.04589563900003668,
+    "mean_cost_usd": 0.0,
+    "mean_prompt_tokens": 0
+  }
+}

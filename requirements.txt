@@ -1,0 +1,15 @@
+fastapi==0.162.6
+uvicorn==0.54.0
+httpx==0.28.1
+pydantic-settings==2.16.3
+redis==8.1.0
+rq==3.0.0
+langgraph==1.2.21
+langchain-core==1.8.0
+faiss-cpu==1.16.0
+numpy==2.5.4
+prometheus-client==0.26.0
+opentelemetry-sdk==1.45.2
+opentelemetry-exporter-otlp-proto-http==1.45.2
+opentelemetry-instrumentation-fastapi==0.66b2
+pypdf==7.1.0

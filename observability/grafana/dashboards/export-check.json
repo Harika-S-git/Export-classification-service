@@ -1,0 +1,387 @@
+{
+  "uid": "export-check",
+  "title": "Export Classification Operations",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "p50 completion seconds",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(worker_run_seconds_bucket[5m])) by (le))",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "p95 completion seconds",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(worker_run_seconds_bucket[5m])) by (le))",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Terminal throughput / s",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "max(rate(worker_run_seconds_count[5m]))",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Availability",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "avg(up)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Escalation fraction",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum(worker_agent_tasks{outcome=\"escalated\"}) / clamp_min(sum(worker_agent_tasks{agent=\"classifier\"}),1)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Container CPU cores",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m]))",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Container memory bytes",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by (name) (container_memory_working_set_bytes{name!=\"\"})",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Agent success fraction",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by(agent)(worker_agent_tasks{outcome=~\"success|completed\"}) / clamp_min(sum by(agent)(worker_agent_tasks),1)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Tool calls per run",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by(agent)(worker_agent_tool_calls) / clamp_min(sum by(agent)(worker_agent_tasks),1)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Steps per run (audit events)",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by(agent)(worker_agent_steps) / clamp_min(sum by(agent)(worker_agent_tasks),1)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Provider failures / step",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "sum by(agent)(worker_agent_retries) / clamp_min(sum by(agent)(worker_agent_steps),1)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Agent step p95 seconds",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 35
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95,sum by(agent,step,le)(rate(worker_step_seconds_bucket[5m])))",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Container uptime seconds",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "worker_container_uptime_seconds",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Run cost USD",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "worker_agent_cost_usd",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Corpus freshness timestamp",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 49
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "corpus_built_timestamp_seconds",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Queue depth",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 49
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "max(worker_queue_depth)",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Provider circuit open",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "expr": "provider_circuit_open",
+          "refId": "A",
+          "legendFormat": "{{agent}} {{name}}"
+        }
+      ]
+    }
+  ],
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  }
+}

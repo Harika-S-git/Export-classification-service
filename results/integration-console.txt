@@ -1,0 +1,7 @@
+PASS clarification
+PASS outside
+PASS unsupported
+PASS verifier-down
+PASS provider-down
+PASS breaker-open
+ALL INTEGRATION CHECKS PASSED

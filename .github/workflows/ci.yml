@@ -1,0 +1,15 @@
+name: project-checks
+on: [push, pull_request]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+      - run: docker compose config --quiet
+      - run: docker build --target tests -t export-check-tests .
+      - run: docker run --rm export-check-tests
+      - run: docker compose up --build -d --wait api classifier-worker
+      - run: curl --fail http://localhost:8000/health
+      - if: always()
+        run: docker compose logs --tail=50

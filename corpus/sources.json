@@ -1,0 +1,38 @@
+[
+  {
+    "file": "cbic-tariff-2022.pdf",
+    "url": "https://taxbykk.com/wp-content/uploads/2023/03/HSN-Code-wef-01.01.2022.pdf",
+    "version": "CBIC Customs Tariff effective 2022-01-01",
+    "sha256": "9c107095931147ee2bfee49c7844446ef0cab4cbaa33760ebd4b5a522716fc9d",
+    "pages": 833,
+    "retrieved_at": "2026-11-13",
+    "remark": "CBIC-authored document obtained from a third-party mirror because CBIC returned HTTP 503. Historical; not confirmed current."
+  },
+  {
+    "file": "Notification_ITCHS.pdf",
+    "url": "https://content.dgft.gov.in/Website/Notification_ITCHS.pdf",
+    "version": "ITC(HS) 2022 Schedule II, snapshot downloaded 2026-11-13",
+    "sha256": "631d57f301fbb284439295e7c5eb41c98db7873ea84fdfe908f09e1894aeecb9",
+    "pages": 1020,
+    "retrieved_at": "2026-11-13",
+    "remark": "No assertion that all later amendments are consolidated."
+  },
+  {
+    "file": "General%20Note%20on%20Export%20Policy.pdf",
+    "url": "https://content.dgft.gov.in/Website/General%20Note%20on%20Export%20Policy.pdf",
+    "version": "ITC(HS) 2022 general notes",
+    "sha256": "0aaf21092c832eb5e20bdb8ccba8b04c270f4f5ca482be9d6b5669badfd1792d",
+    "pages": 4,
+    "retrieved_at": "2026-11-13",
+    "remark": ""
+  },
+  {
+    "file": "gri-2022.pdf",
+    "url": "https://www.wcoomd.org/-/media/wco/public/global/pdf/topics/nomenclature/instruments-and-tools/hs-nomenclature-2022/2022/0001_2022e-gir.pdf?la=en",
+    "version": "WCO HS 2022 GRI",
+    "sha256": "a15ad1e08fa165e509a34d4bf07299b57c68554d98149217c284c24fe2d49d5a",
+    "pages": 1,
+    "retrieved_at": "2026-11-13",
+    "remark": "Authoritative HS rules used as substitute; CBIC-hosted GRI download unavailable. Corpus confirmation remains an Evaluation 1 task."
+  }
+]

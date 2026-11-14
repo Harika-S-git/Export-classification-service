@@ -1,0 +1,15 @@
+# Optional managed-cloud build CA. Not needed on ordinary Docker Desktop.
+services:
+  api:
+    build: {context: ., secrets: [proxy_ca]}
+  indexer:
+    build: {context: ., secrets: [proxy_ca]}
+  verifier:
+    build: {context: ., secrets: [proxy_ca]}
+  classifier-worker:
+    build: {context: ., secrets: [proxy_ca]}
+  provider-stub:
+    build: {context: ., secrets: [proxy_ca]}
+secrets:
+  proxy_ca:
+    file: ${BUILD_CA_FILE}

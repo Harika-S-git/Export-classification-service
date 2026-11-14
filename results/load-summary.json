@@ -1,0 +1,74 @@
+{
+  "slo_p95_seconds": 30,
+  "arrival_window_seconds": 40,
+  "stub_delay_seconds": 0.75,
+  "cache": false,
+  "rows": [
+    {
+      "workers": 1,
+      "clients": 1,
+      "n": 18,
+      "failures": 0,
+      "rps": 0.4502598575411217,
+      "p50_seconds": 2.0,
+      "p95_seconds": 2.3,
+      "slo_met": true,
+      "source": "results/load/w1-u1_stats.csv"
+    },
+    {
+      "workers": 1,
+      "clients": 10,
+      "n": 28,
+      "failures": 0,
+      "rps": 0.4899484432054128,
+      "p50_seconds": 20.0,
+      "p95_seconds": 20.0,
+      "slo_met": true,
+      "source": "results/load/w1-u10_stats.csv"
+    },
+    {
+      "workers": 1,
+      "clients": 30,
+      "n": 45,
+      "failures": 0,
+      "rps": 0.4531985796657902,
+      "p50_seconds": 51.0,
+      "p95_seconds": 65.0,
+      "slo_met": false,
+      "source": "results/load/w1-u30_stats.csv"
+    },
+    {
+      "workers": 3,
+      "clients": 10,
+      "n": 60,
+      "failures": 0,
+      "rps": 1.3025751468600861,
+      "p50_seconds": 7.2,
+      "p95_seconds": 8.7,
+      "slo_met": true,
+      "source": "results/load/w3-u10_stats.csv"
+    },
+    {
+      "workers": 3,
+      "clients": 30,
+      "n": 72,
+      "failures": 0,
+      "rps": 1.1721982406066047,
+      "p50_seconds": 25.0,
+      "p95_seconds": 28.0,
+      "slo_met": true,
+      "source": "results/load/w3-u30_stats.csv"
+    },
+    {
+      "workers": 3,
+      "clients": 60,
+      "n": 102,
+      "failures": 0,
+      "rps": 1.2060445416945127,
+      "p50_seconds": 43.0,
+      "p95_seconds": 51.0,
+      "slo_met": false,
+      "source": "results/load/w3-u60_stats.csv"
+    }
+  ]
+}

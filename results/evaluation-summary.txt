@@ -1,0 +1,21 @@
+{
+  "v1": {
+    "scenarios": 28,
+    "accuracy": 0.8214285714285714,
+    "verification_rejections": 10,
+    "groundedness": 1.0,
+    "context_relevance": 0.32007228746154864,
+    "faithfulness": 1.0,
+    "hallucination_rate": 0.0
+  },
+  "v2": {
+    "scenarios": 28,
+    "accuracy": 1.0,
+    "verification_rejections": 0,
+    "groundedness": 1.0,
+    "context_relevance": 0.32007228746154864,
+    "faithfulness": 1.0,
+    "hallucination_rate": 0.0
+  },
+  "change": "v1 material-first proposal ablation -> v2 article-first proposal. Same retrieval, verifier, scenarios, delayed stub. Measures planner/prompt package, not isolated LLM prompt quality."
+}
