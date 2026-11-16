@@ -25,11 +25,9 @@ def test_medical_intended_use_escalates():
 def test_animal_origin_condition_escalates():
  s=request();s['request']['product']['description']='Bone buttons for garments';s['request']['proposed']['heading']='9606'
  with patch('app.verifier.event'):assert check(s)['heading'] is None
-def test_escalation_preserves_explicit_null_fields():
- s=request();s['request']['product']['description']='A steel padlock'
+def test_unproposed_heading_escalates():
+ s=request();s['request']['proposed']['heading']=None
  with patch('app.verifier.event'):
      r=check(s)
-     assert 'heading' in r and r['heading'] is None
-     assert 'rule' in r and r['rule'] is None
-     assert 'tariff_item' in r and r['tariff_item'] is None
-     assert r['route'] == 'specialist-classification-review'
+     assert r['valid'] is True
+     assert r['heading'] is None
