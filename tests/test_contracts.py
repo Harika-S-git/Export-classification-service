@@ -23,3 +23,7 @@ def test_accept_reference():
 @pytest.mark.parametrize('field,value',[('capacity_l','1'),('quantity',True),('complete','yes')])
 def test_strict_types(field,value):
  with pytest.raises(ValidationError):Product(description='A complete steel vacuum flask',**{field:value})
+@pytest.mark.parametrize('cap',[0.5, 0.75, 0.751, 1.0])
+def test_valid_capacity_boundaries(cap):
+ p = Product(description='Stainless steel vacuum flask with a moulded plastic outer body.', capacity_l=cap)
+ assert p.capacity_l == cap

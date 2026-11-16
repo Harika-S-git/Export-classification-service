@@ -26,7 +26,7 @@ def main():
     summary={}
     for version in ('v1','v2'):
         subset=[r for r in rows if r['prompt']==version]
-        summary[version]={'scenarios':len(subset),'accuracy':sum(r['correct'] for r in subset)/len(subset),**{m:sum(r['metrics'][m] for r in subset)/len(subset) for m in ('groundedness','context_relevance','faithfulness','hallucination_rate')}}
+        summary[version]={'scenarios':len(subset),'accuracy':sum(r['correct'] for r in subset)/len(subset),'verification_rejections':sum(r['verification_rejections'] for r in subset),**{m:sum(r['metrics'][m] for r in subset)/len(subset) for m in ('groundedness','context_relevance','faithfulness','hallucination_rate')}}
     summary['change']='v1 material-first proposal ablation -> v2 article-first proposal. Same retrieval, verifier, scenarios, delayed stub. Measures planner/prompt package, not isolated LLM prompt quality.'
     Path(a.output).parent.mkdir(exist_ok=True,parents=True);Path(a.output).write_text(json.dumps({'summary':summary,'rows':rows},indent=2));print(json.dumps(summary,indent=2))
 if __name__=='__main__':main()

@@ -5,7 +5,7 @@ records instead, so scaling and RQ child exits do not silently drop measurements
 import os,time,json,threading
 from http.server import BaseHTTPRequestHandler,HTTPServer
 from rq import Worker
-from prometheus_client import generate_latest,CollectorRegistry,Gauge,Histogram
+from prometheus_client import generate_latest,CollectorRegistry,Gauge,Histogram,CONTENT_TYPE_LATEST
 from .config import settings
 from .store import db
 # Preload graph modules before fork to avoid per-job Python import overhead.
@@ -20,7 +20,8 @@ def audit_metrics():
     retries=Gauge('worker_agent_retries','Retries',['agent'],registry=registry)
     cost=Gauge('worker_agent_cost_usd','Cost',['agent'],registry=registry)
     step_latency=Histogram('worker_step_seconds','Step duration',['agent','step'],registry=registry)
-    counts={};tc={};sc={};rc={};cc={}
+    counts={('classifier','completed'):0,('classifier','escalated'):0,('verifier','success'):0,('verifier','rejected'):0}
+    tc={'classifier':0,'verifier':0};sc={'classifier':0,'verifier':0};rc={'classifier':0,'verifier':0};cc={'classifier':0.0,'verifier':0.0}
     for key in ridkeys:
         row=r.hgetall(key);d=json.loads(row.get('duration_seconds','null'))
         if d is not None:latency.observe(d)
@@ -46,7 +47,10 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             body=audit_metrics() if self.path=='/metrics' else b'ok' if db().ping() else b'error'
-            self.send_response(200);self.end_headers();self.wfile.write(body)
+            self.send_response(200)
+            self.send_header('Content-Type',CONTENT_TYPE_LATEST if self.path=='/metrics' else 'text/plain')
+            self.end_headers()
+            self.wfile.write(body)
         except Exception:self.send_response(503);self.end_headers()
     def log_message(self,*args):pass
 if __name__=='__main__':

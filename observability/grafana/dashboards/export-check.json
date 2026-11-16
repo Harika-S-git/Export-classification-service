@@ -131,9 +131,9 @@
       },
       "targets": [
         {
-          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m]))",
+          "expr": "sum by (id) (rate(container_cpu_usage_seconds_total{cpu=\"total\"}[5m]))",
           "refId": "A",
-          "legendFormat": "{{agent}} {{name}}"
+          "legendFormat": "{{id}}"
         }
       ]
     },
@@ -153,9 +153,9 @@
       },
       "targets": [
         {
-          "expr": "sum by (name) (container_memory_working_set_bytes{name!=\"\"})",
+          "expr": "sum by (id) (container_memory_working_set_bytes{id=~\"/|/docker|/restricted\"})",
           "refId": "A",
-          "legendFormat": "{{agent}} {{name}}"
+          "legendFormat": "{{id}}"
         }
       ]
     },

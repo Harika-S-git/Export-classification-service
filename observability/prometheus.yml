@@ -8,6 +8,7 @@ scrape_configs:
   - job_name: stub
     static_configs: [{targets: ['provider-stub:8002']}]
   - job_name: workers
+    fallback_scrape_protocol: PrometheusText0.0.4
     dns_sd_configs: [{names: ['classifier-worker'], type: A, port: 9100}]
   - job_name: redis
     static_configs: [{targets: ['redis-exporter:9121']}]

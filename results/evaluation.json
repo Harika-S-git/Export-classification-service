@@ -2,8 +2,7 @@
   "summary": {
     "v1": {
       "scenarios": 28,
-      "accuracy": 0.8214285714285714,
-      "verification_rejections": 10,
+      "accuracy": 0.21428571428571427,
       "groundedness": 1.0,
       "context_relevance": 0.32007228746154864,
       "faithfulness": 1.0,
@@ -11,8 +10,7 @@
     },
     "v2": {
       "scenarios": 28,
-      "accuracy": 1.0,
-      "verification_rejections": 0,
+      "accuracy": 0.25,
       "groundedness": 1.0,
       "context_relevance": 0.32007228746154864,
       "faithfulness": 1.0,
@@ -24,7 +22,7 @@
     {
       "case": "01-reference",
       "prompt": "v1",
-      "run_id": "b28e3560-670c-4c1e-bd43-d9383200a434",
+      "run_id": "5c251855-061e-42fc-9d23-11682d427389",
       "correct": false,
       "expected": {
         "heading": "9617",
@@ -70,14 +68,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.650196313858032,
       "verification_rejections": 2,
-      "trace_event_count": 28
+      "duration_seconds": 2.1755282878875732
     },
     {
       "case": "02-flask-small",
       "prompt": "v1",
-      "run_id": "698f6af8-4574-45ae-b230-8959175530a8",
+      "run_id": "8d6f8a72-a3fc-4343-8617-9def5d22f29e",
       "correct": false,
       "expected": {
         "heading": "9617",
@@ -123,14 +120,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.366168022155762,
       "verification_rejections": 2,
-      "trace_event_count": 28
+      "duration_seconds": 2.0680577754974365
     },
     {
       "case": "03-flask-large",
       "prompt": "v1",
-      "run_id": "d999fc0c-ea93-4a47-a2a1-e0f6f762f912",
+      "run_id": "325f4cee-64f8-4a24-9053-3fcf6c1fe6e8",
       "correct": false,
       "expected": {
         "heading": "9617",
@@ -175,14 +171,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.295074939727783,
       "verification_rejections": 2,
-      "trace_event_count": 28
+      "duration_seconds": 2.035698652267456
     },
     {
       "case": "04-flask-boundary",
       "prompt": "v1",
-      "run_id": "c134d01c-894e-4e1d-88ea-51209eba558b",
+      "run_id": "1d219a60-63fb-4b54-b560-7a158100c92b",
       "correct": false,
       "expected": {
         "heading": "9617",
@@ -227,14 +222,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.435808420181274,
       "verification_rejections": 2,
-      "trace_event_count": 28
+      "duration_seconds": 2.3123977184295654
     },
     {
       "case": "05-flask-over",
       "prompt": "v1",
-      "run_id": "8aa694a7-0802-4d6a-9b13-f4f2c17a2ad2",
+      "run_id": "62e784fb-6913-42ff-a259-dab9798c0766",
       "correct": false,
       "expected": {
         "heading": "9617",
@@ -279,15 +273,14 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.474330902099609,
       "verification_rejections": 2,
-      "trace_event_count": 28
+      "duration_seconds": 2.069502592086792
     },
     {
       "case": "06-buttons-metal",
       "prompt": "v1",
-      "run_id": "21f3891b-b2d0-40a2-8b6e-958dd647dbf5",
-      "correct": true,
+      "run_id": "b2cdc250-a15e-4330-a28f-db4a00466646",
+      "correct": false,
       "expected": {
         "heading": "9606",
         "route": "clear-for-filing"
@@ -296,8 +289,8 @@
         "heading": "9606",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9606 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -379,15 +372,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.164490222930908,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0114939212799072
     },
     {
       "case": "07-buttons-plastic",
       "prompt": "v1",
-      "run_id": "99f9ae56-8cbf-4619-9a7d-5ede74788887",
-      "correct": true,
+      "run_id": "e6ed281c-b70e-454d-b676-619cca8a3416",
+      "correct": false,
       "expected": {
         "heading": "9606",
         "route": "clear-for-filing"
@@ -396,8 +388,8 @@
         "heading": "9606",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9606 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -481,15 +473,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.705080986022949,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9961624145507812
     },
     {
       "case": "08-pen",
       "prompt": "v1",
-      "run_id": "b7366bb6-d0c9-4935-9e00-d6a2786ec6fc",
-      "correct": true,
+      "run_id": "11add36f-8e4c-4861-b55b-9c9ef86fb724",
+      "correct": false,
       "expected": {
         "heading": "9608",
         "route": "clear-for-filing"
@@ -498,8 +489,8 @@
         "heading": "9608",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9608 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -583,15 +574,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.534030914306641,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.036050796508789
     },
     {
       "case": "09-pencil",
       "prompt": "v1",
-      "run_id": "c86a2a28-fbac-4560-b1f5-22b9927dd404",
-      "correct": true,
+      "run_id": "9a3fa907-3913-4742-a33f-b54e33aa88d0",
+      "correct": false,
       "expected": {
         "heading": "9609",
         "route": "clear-for-filing"
@@ -600,8 +590,8 @@
         "heading": "9609",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9609 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -685,15 +675,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.511815547943115,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0623221397399902
     },
     {
       "case": "10-toothbrush",
       "prompt": "v1",
-      "run_id": "25797482-baca-42d4-bf48-0d695ec62371",
-      "correct": true,
+      "run_id": "4d7bf3f8-fee0-4954-8b7c-5bd48722b6b0",
+      "correct": false,
       "expected": {
         "heading": "9603",
         "route": "clear-for-filing"
@@ -702,8 +691,8 @@
         "heading": "9603",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9603 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -787,15 +776,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.050657033920288,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.015988826751709
     },
     {
       "case": "11-comb",
       "prompt": "v1",
-      "run_id": "43907b07-7288-4b2b-abee-3bb86537498e",
-      "correct": true,
+      "run_id": "1b6d5c32-3332-432f-b5a1-afeb36ccaa21",
+      "correct": false,
       "expected": {
         "heading": "9615",
         "route": "clear-for-filing"
@@ -804,8 +792,8 @@
         "heading": "9615",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9615 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -889,15 +877,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.171208620071411,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.01440167427063
     },
     {
       "case": "12-zipper",
       "prompt": "v1",
-      "run_id": "00b872e8-47ab-401c-9424-c05ff49c92fe",
-      "correct": true,
+      "run_id": "441e70ea-088f-46cf-8681-7f4738916a9d",
+      "correct": false,
       "expected": {
         "heading": "9607",
         "route": "clear-for-filing"
@@ -906,8 +893,8 @@
         "heading": "9607",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9607 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -989,15 +976,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.0154948234558105,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0645124912261963
     },
     {
       "case": "13-bolt",
       "prompt": "v1",
-      "run_id": "fec92b3e-6979-4ea6-8d78-d93f5672f0f8",
-      "correct": true,
+      "run_id": "342200fd-43b1-4641-9c64-c5451f79fd3d",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -1006,8 +992,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1091,15 +1077,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 6.127077579498291,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0918211936950684
     },
     {
       "case": "14-screw",
       "prompt": "v1",
-      "run_id": "89c6010a-7b2c-412b-a6f6-d43fa258a36c",
-      "correct": true,
+      "run_id": "d555938a-9071-4b80-a47e-b55ad7448ac3",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -1108,8 +1093,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1193,15 +1178,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.595882415771484,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.210519790649414
     },
     {
       "case": "15-nut",
       "prompt": "v1",
-      "run_id": "c8bcb860-9f2b-4cc8-a6aa-f063c10c6fc0",
-      "correct": true,
+      "run_id": "529dff39-3a7f-4559-a2cd-92452f191703",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -1210,8 +1194,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1296,15 +1280,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.7714173793792725,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0581188201904297
     },
     {
       "case": "16-nail",
       "prompt": "v1",
-      "run_id": "41c1a09f-7383-4cee-9e55-0091a772c081",
-      "correct": true,
+      "run_id": "1febbfa9-87c2-4bb6-ac45-6b50f0f54b87",
+      "correct": false,
       "expected": {
         "heading": "7317",
         "route": "clear-for-filing"
@@ -1313,8 +1296,8 @@
         "heading": "7317",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7317 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1399,15 +1382,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.413082599639893,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0406179428100586
     },
     {
       "case": "17-chain",
       "prompt": "v1",
-      "run_id": "d48d862a-8040-4aeb-b2bb-691b0133cefd",
-      "correct": true,
+      "run_id": "fcbcc912-002c-4e87-b3e6-c5309c48f908",
+      "correct": false,
       "expected": {
         "heading": "7315",
         "route": "clear-for-filing"
@@ -1416,8 +1398,8 @@
         "heading": "7315",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7315 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1501,15 +1483,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.76906418800354,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.979435682296753
     },
     {
       "case": "18-pipe-fitting",
       "prompt": "v1",
-      "run_id": "0faf113a-921b-4be4-b154-1fc114d6d123",
-      "correct": true,
+      "run_id": "1a95d98c-e0e9-46b9-ab7f-9ad503e04350",
+      "correct": false,
       "expected": {
         "heading": "7307",
         "route": "clear-for-filing"
@@ -1518,8 +1499,8 @@
         "heading": "7307",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7307 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1603,15 +1584,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.293553113937378,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0403482913970947
     },
     {
       "case": "19-saucepan",
       "prompt": "v1",
-      "run_id": "101b3325-4d14-4906-8eef-71ef1f9b6ada",
-      "correct": true,
+      "run_id": "fff40957-6427-40a8-a7ec-199c451fcda8",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -1620,8 +1600,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1705,15 +1685,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.523801565170288,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9838593006134033
     },
     {
       "case": "20-scourer",
       "prompt": "v1",
-      "run_id": "48906bda-b6eb-4c90-a4bf-3a846cf37bf3",
-      "correct": true,
+      "run_id": "0c110847-0bae-4b43-a73f-668a85158bfd",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -1722,8 +1701,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1807,15 +1786,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.413037061691284,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9445466995239258
     },
     {
       "case": "21-sewing-needle",
       "prompt": "v1",
-      "run_id": "5b864bdb-41b4-4c4f-89ee-34dda452535a",
-      "correct": true,
+      "run_id": "c033d194-1c69-4005-b0da-5071a9cf0b63",
+      "correct": false,
       "expected": {
         "heading": "7319",
         "route": "clear-for-filing"
@@ -1824,8 +1802,8 @@
         "heading": "7319",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7319 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -1909,14 +1887,13 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 6.438944101333618,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0182383060455322
     },
     {
       "case": "22-padlock",
       "prompt": "v1",
-      "run_id": "1e8205f5-58b7-454f-bc18-b32db60c40f6",
+      "run_id": "b896d04a-a2bb-4a5a-a3f3-2843924509d0",
       "correct": true,
       "expected": {
         "heading": null,
@@ -1997,14 +1974,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 9.757641077041626,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.047304153442383
     },
     {
       "case": "23-glass-inner",
       "prompt": "v1",
-      "run_id": "7ed299fd-852d-43c0-9f70-29287b70c06b",
+      "run_id": "ea3e393a-c15a-4344-b726-fda7bbc7c1df",
       "correct": true,
       "expected": {
         "heading": null,
@@ -2085,14 +2061,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.937652111053467,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9675726890563965
     },
     {
       "case": "24-cosmetic-pencil",
       "prompt": "v1",
-      "run_id": "4b174c3a-51e2-44d2-aee5-514c0665a578",
+      "run_id": "a88bef36-83ca-4cf9-897e-991d8e66f4b2",
       "correct": true,
       "expected": {
         "heading": null,
@@ -2165,14 +2140,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.7886950969696045,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9921810626983643
     },
     {
       "case": "25-electric-toothbrush",
       "prompt": "v1",
-      "run_id": "60e0b79b-39fe-4ad5-962b-0636f29c4700",
+      "run_id": "fb18a81f-ec40-4b45-8190-ca0e8b6216dc",
       "correct": true,
       "expected": {
         "heading": null,
@@ -2245,14 +2219,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 4.752081871032715,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.954758644104004
     },
     {
       "case": "26-unidentified",
       "prompt": "v1",
-      "run_id": "1e50154d-8a94-4528-ac71-91833b633b23",
+      "run_id": "7c704468-c44f-45ba-a86a-a73a250defc1",
       "correct": true,
       "expected": {
         "heading": null,
@@ -2329,14 +2302,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 5.002972364425659,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9922266006469727
     },
     {
       "case": "27-composite-equal",
       "prompt": "v1",
-      "run_id": "3bad21ff-fb55-46ce-b58a-eaf2e8d92342",
+      "run_id": "8a6fc3d6-29fe-457d-8e31-0be0ad8d9f95",
       "correct": true,
       "expected": {
         "heading": null,
@@ -2423,15 +2395,14 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 5.345646619796753,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0305185317993164
     },
     {
       "case": "28-non-vacuum",
       "prompt": "v1",
-      "run_id": "c9250fbe-1ac8-44c8-9c02-a16ba76782f9",
-      "correct": true,
+      "run_id": "318dbb07-deed-47c2-8908-9ccec8c82d7f",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -2440,8 +2411,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -2525,14 +2496,13 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.073141813278198,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0221481323242188
     },
     {
       "case": "01-reference",
       "prompt": "v2",
-      "run_id": "7835a4c1-fa6f-4b6f-a27c-ce68cc36097c",
+      "run_id": "7691bff0-0730-4fa9-93d2-c88290633607",
       "correct": true,
       "expected": {
         "heading": "9617",
@@ -2543,7 +2513,7 @@
         "tariff_item": null,
         "rule": "GRI 1",
         "route": "seek-product-clarification",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading. Heading 9617 is established; capacity is required to choose the eight-digit flask tariff item.",
+        "basis": "GRI 1: heading 9617 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. Heading 9617 is established; capacity is required to choose the eight-digit flask tariff item.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -2628,15 +2598,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.080831289291382,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9957377910614014
     },
     {
       "case": "02-flask-small",
       "prompt": "v2",
-      "run_id": "712ea671-35da-4b03-a4db-848e200881f5",
-      "correct": true,
+      "run_id": "90cabc73-c707-4987-9d33-527a35357487",
+      "correct": false,
       "expected": {
         "heading": "9617",
         "route": "clear-for-filing"
@@ -2645,8 +2614,8 @@
         "heading": "9617",
         "tariff_item": "96170011",
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9617 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -2731,15 +2700,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 6.116103410720825,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.013017177581787
     },
     {
       "case": "03-flask-large",
       "prompt": "v2",
-      "run_id": "32272fb0-a8f8-48f2-9201-78c1f22a382c",
-      "correct": true,
+      "run_id": "99a7f16e-1167-4751-91c6-1750e5b08349",
+      "correct": false,
       "expected": {
         "heading": "9617",
         "route": "clear-for-filing"
@@ -2748,8 +2716,8 @@
         "heading": "9617",
         "tariff_item": "96170012",
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9617 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -2833,15 +2801,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 5.534696340560913,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0420098304748535
     },
     {
       "case": "04-flask-boundary",
       "prompt": "v2",
-      "run_id": "c463d953-d3ac-4725-9ab3-e76917d8ed1c",
-      "correct": true,
+      "run_id": "9e3340f6-7861-46e3-9380-5682dc326437",
+      "correct": false,
       "expected": {
         "heading": "9617",
         "route": "clear-for-filing"
@@ -2850,8 +2817,8 @@
         "heading": "9617",
         "tariff_item": "96170011",
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9617 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -2935,15 +2902,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.758441686630249,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.2176411151885986
     },
     {
       "case": "05-flask-over",
       "prompt": "v2",
-      "run_id": "b8353ee4-c6e0-4376-a0e1-a8e4ce273546",
-      "correct": true,
+      "run_id": "b291fab8-f1a5-4cf4-95d5-0bf48a97695e",
+      "correct": false,
       "expected": {
         "heading": "9617",
         "route": "clear-for-filing"
@@ -2952,8 +2918,8 @@
         "heading": "9617",
         "tariff_item": "96170012",
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9617 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3037,15 +3003,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 6.245981693267822,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0298452377319336
     },
     {
       "case": "06-buttons-metal",
       "prompt": "v2",
-      "run_id": "b8b89424-d5c2-46f4-9139-2e19dd808827",
-      "correct": true,
+      "run_id": "ef9916c0-3f9d-43aa-a539-53000d20cd26",
+      "correct": false,
       "expected": {
         "heading": "9606",
         "route": "clear-for-filing"
@@ -3054,8 +3019,8 @@
         "heading": "9606",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9606 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3137,15 +3102,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.900488376617432,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.998053789138794
     },
     {
       "case": "07-buttons-plastic",
       "prompt": "v2",
-      "run_id": "a7a9df5d-709c-4762-bd37-c059376cb11d",
-      "correct": true,
+      "run_id": "b9f65b5e-4ff4-49e6-8dd0-5d54dd9f47fe",
+      "correct": false,
       "expected": {
         "heading": "9606",
         "route": "clear-for-filing"
@@ -3154,8 +3118,8 @@
         "heading": "9606",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9606 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3239,15 +3203,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.400059700012207,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0024116039276123
     },
     {
       "case": "08-pen",
       "prompt": "v2",
-      "run_id": "240bada9-54ed-427b-8357-53c8ba9b1bee",
-      "correct": true,
+      "run_id": "4e55dc9c-0223-4726-be57-fb0317a07d11",
+      "correct": false,
       "expected": {
         "heading": "9608",
         "route": "clear-for-filing"
@@ -3256,8 +3219,8 @@
         "heading": "9608",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9608 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3341,15 +3304,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.336309432983398,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.062272548675537
     },
     {
       "case": "09-pencil",
       "prompt": "v2",
-      "run_id": "7483a245-acbc-4d46-8f33-4a5187d8a3f4",
-      "correct": true,
+      "run_id": "4c5f4410-18aa-464c-9674-dea6d2fe4f9c",
+      "correct": false,
       "expected": {
         "heading": "9609",
         "route": "clear-for-filing"
@@ -3358,8 +3320,8 @@
         "heading": "9609",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9609 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3443,15 +3405,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.213718414306641,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0963430404663086
     },
     {
       "case": "10-toothbrush",
       "prompt": "v2",
-      "run_id": "d28deabf-dc15-446e-a4ef-a1aa1114c3cb",
-      "correct": true,
+      "run_id": "2a70dbb7-9245-4927-88be-9176d63220ba",
+      "correct": false,
       "expected": {
         "heading": "9603",
         "route": "clear-for-filing"
@@ -3460,8 +3421,8 @@
         "heading": "9603",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9603 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3545,15 +3506,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.184664487838745,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0619611740112305
     },
     {
       "case": "11-comb",
       "prompt": "v2",
-      "run_id": "e6188503-0d03-4d64-8d12-80274deff7f5",
-      "correct": true,
+      "run_id": "5768b7bd-f323-41a6-b61b-b3924d7d143a",
+      "correct": false,
       "expected": {
         "heading": "9615",
         "route": "clear-for-filing"
@@ -3562,8 +3522,8 @@
         "heading": "9615",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9615 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3647,15 +3607,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.552274942398071,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0251834392547607
     },
     {
       "case": "12-zipper",
       "prompt": "v2",
-      "run_id": "cf8748aa-5d79-4501-b5f0-4d7527a11ee6",
-      "correct": true,
+      "run_id": "4d28e6a5-00bd-4d7a-b3c6-0322ca46b1d7",
+      "correct": false,
       "expected": {
         "heading": "9607",
         "route": "clear-for-filing"
@@ -3664,8 +3623,8 @@
         "heading": "9607",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 9607 names the identified article; the heading terms and applicable notes control classification. Section XV Note 1(m) excludes articles of Chapter 96, so base-metal content does not override the article heading. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3747,15 +3706,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.233872175216675,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9605767726898193
     },
     {
       "case": "13-bolt",
       "prompt": "v2",
-      "run_id": "9f33d5fe-600d-4965-a9c9-aa7f7410620d",
-      "correct": true,
+      "run_id": "2e525d2d-2273-433e-ad0d-b8a6a4a75eed",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -3764,8 +3722,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3849,15 +3807,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 4.81181263923645,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.040346622467041
     },
     {
       "case": "14-screw",
       "prompt": "v2",
-      "run_id": "fe7d9e0f-98c2-4e0d-9d71-abd1b09cffa4",
-      "correct": true,
+      "run_id": "141a53fd-9bb5-424d-9296-026758c88f33",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -3866,8 +3823,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -3951,15 +3908,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 6.030035734176636,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.126387119293213
     },
     {
       "case": "15-nut",
       "prompt": "v2",
-      "run_id": "2beaaa16-dab0-4c3e-8e8d-80b07a2c066b",
-      "correct": true,
+      "run_id": "b96526ac-ead8-44ac-9f55-587fdedb0243",
+      "correct": false,
       "expected": {
         "heading": "7318",
         "route": "clear-for-filing"
@@ -3968,8 +3924,8 @@
         "heading": "7318",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7318 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4054,15 +4010,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.8546154499053955,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0191564559936523
     },
     {
       "case": "16-nail",
       "prompt": "v2",
-      "run_id": "1735931a-663c-4c1c-b87c-cfae5f6f2e3c",
-      "correct": true,
+      "run_id": "52259b87-4d3d-4f94-b543-aeba610b7ed0",
+      "correct": false,
       "expected": {
         "heading": "7317",
         "route": "clear-for-filing"
@@ -4071,8 +4026,8 @@
         "heading": "7317",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7317 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4157,15 +4112,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 2.269465923309326,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0164692401885986
     },
     {
       "case": "17-chain",
       "prompt": "v2",
-      "run_id": "523edde2-1901-4043-a9a2-43b98303626a",
-      "correct": true,
+      "run_id": "6c9798ab-e7e2-4be3-a09c-de1c500a55c2",
+      "correct": false,
       "expected": {
         "heading": "7315",
         "route": "clear-for-filing"
@@ -4174,8 +4128,8 @@
         "heading": "7315",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7315 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4259,15 +4213,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 2.171320915222168,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.027669668197632
     },
     {
       "case": "18-pipe-fitting",
       "prompt": "v2",
-      "run_id": "b52c201e-ff13-4b16-b549-6666af75b792",
-      "correct": true,
+      "run_id": "25010ae3-8f5d-4b7d-925f-b6883101e3d1",
+      "correct": false,
       "expected": {
         "heading": "7307",
         "route": "clear-for-filing"
@@ -4276,8 +4229,8 @@
         "heading": "7307",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7307 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4361,15 +4314,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.9151041507720947,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0389111042022705
     },
     {
       "case": "19-saucepan",
       "prompt": "v2",
-      "run_id": "365b4dbd-14da-43ad-a6e0-b97618c43d95",
-      "correct": true,
+      "run_id": "0c13937f-2c31-4eb9-b040-4d067f43b225",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -4378,8 +4330,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4463,15 +4415,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.9361777305603027,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0288572311401367
     },
     {
       "case": "20-scourer",
       "prompt": "v2",
-      "run_id": "3bf5b536-32aa-45c8-bda1-35c30e4844c6",
-      "correct": true,
+      "run_id": "6c2c9bc7-369a-4a41-94a8-2fc20349e073",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -4480,8 +4431,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4565,15 +4516,14 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.931642770767212,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9752652645111084
     },
     {
       "case": "21-sewing-needle",
       "prompt": "v2",
-      "run_id": "c68ef8de-0431-4b76-a37a-1d3ed09c9c20",
-      "correct": true,
+      "run_id": "39478a3b-a529-4052-9bf4-04980681ba87",
+      "correct": false,
       "expected": {
         "heading": "7319",
         "route": "clear-for-filing"
@@ -4582,8 +4532,8 @@
         "heading": "7319",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7319 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -4667,14 +4617,13 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.8651154041290283,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.95754075050354
     },
     {
       "case": "22-padlock",
       "prompt": "v2",
-      "run_id": "c1d1ca29-b870-4012-aee8-d4bd4dc422e2",
+      "run_id": "bdcc0929-302d-4fdf-b28a-1677091ca56c",
       "correct": true,
       "expected": {
         "heading": null,
@@ -4755,14 +4704,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 1.8851828575134277,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.993412971496582
     },
     {
       "case": "23-glass-inner",
       "prompt": "v2",
-      "run_id": "49b7865b-0315-4b1d-85c6-db5f79eb08b2",
+      "run_id": "a17a4a30-7842-4d3d-9b49-90eb5973f563",
       "correct": true,
       "expected": {
         "heading": null,
@@ -4843,14 +4791,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 1.9506065845489502,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.1291799545288086
     },
     {
       "case": "24-cosmetic-pencil",
       "prompt": "v2",
-      "run_id": "0359d89b-e36a-4d28-81fb-f40255455f5e",
+      "run_id": "acbf5f68-cf1c-4288-a292-b505c6bd7bdd",
       "correct": true,
       "expected": {
         "heading": null,
@@ -4923,14 +4870,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 2.1610124111175537,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9953134059906006
     },
     {
       "case": "25-electric-toothbrush",
       "prompt": "v2",
-      "run_id": "c426bcdd-d783-469f-865c-a6be6682c252",
+      "run_id": "948965fe-e26f-4595-b287-0cadf6a01cb0",
       "correct": true,
       "expected": {
         "heading": null,
@@ -5003,14 +4949,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 1.9908039569854736,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.9754905700683594
     },
     {
       "case": "26-unidentified",
       "prompt": "v2",
-      "run_id": "3d02ae7b-4d03-4c93-be22-2519d57bf7de",
+      "run_id": "3bd71e9f-db6d-4bf0-b476-6e72e5bfb0f5",
       "correct": true,
       "expected": {
         "heading": null,
@@ -5087,14 +5032,13 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 2.16377592086792,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0328705310821533
     },
     {
       "case": "27-composite-equal",
       "prompt": "v2",
-      "run_id": "34ed581f-e14a-4475-9e18-bc3b07040f22",
+      "run_id": "8a47b957-38d7-4426-b374-bdee46949ffb",
       "correct": true,
       "expected": {
         "heading": null,
@@ -5181,15 +5125,14 @@
         "safe_abstention": true,
         "proxy_only": true
       },
-      "duration_seconds": 1.8260140419006348,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 1.998624563217163
     },
     {
       "case": "28-non-vacuum",
       "prompt": "v2",
-      "run_id": "839158c4-8f93-4f20-9bac-7b84167a081b",
-      "correct": true,
+      "run_id": "ebab3d28-14cf-46cc-8aab-b9adfc568a6b",
+      "correct": false,
       "expected": {
         "heading": "7323",
         "route": "clear-for-filing"
@@ -5198,8 +5141,8 @@
         "heading": "7323",
         "tariff_item": null,
         "rule": "GRI 1",
-        "route": "clear-for-filing",
-        "basis": "GRI 1: article-naming heading and applicable section/chapter notes support the proposed heading.",
+        "route": "specialist-classification-review",
+        "basis": "GRI 1: heading 7323 names the identified article; the heading terms and applicable notes control classification. The bundled historical policy snapshot has not been confirmed for the intended shipment date.",
         "export_policy": "Free (frozen corpus snapshot; conditions and destination restrictions require broker review)",
         "citations": [
           {
@@ -5283,16 +5226,8 @@
         "safe_abstention": false,
         "proxy_only": true
       },
-      "duration_seconds": 1.8566737174987793,
       "verification_rejections": 0,
-      "trace_event_count": 21
+      "duration_seconds": 2.0152804851531982
     }
-  ],
-  "metric_definitions": {
-    "groundedness": "Supported final heading/rule/policy claims divided by emitted claims. A claim requires both a returned citation and matching retrieved passage ID. No claims: 1 (safe abstention), reported separately. Canonical hashes are checked by verifier.",
-    "context_relevance": "Distinct retrieved IDs that belong to scenario gold support plus POLICY-GENERAL / all distinct retrieved IDs, averaged over scenarios. Conservative exact-ID relevance proxy.",
-    "faithfulness": "Fraction of final structured claims consistent with the retrieved heading, rule and policy evidence. Same deterministic test as groundedness in this bounded schema; not an independent semantic judge.",
-    "hallucination_rate": "Unsupported final claims / final claims, zero for no claims. Verifier-rejected draft claims are counted separately and never returned.",
-    "accuracy": "Exact expected heading and route, including clarification/escalation. Frozen snapshot acknowledged for evaluation."
-  }
+  ]
 }
