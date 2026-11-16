@@ -102,7 +102,7 @@ claims divided by emitted claims, zero for no claims. These explicit determinist
 proxies are the evaluator equivalent; no TruLens library execution is claimed.
 
 ## Reliability, guardrails and observability validation
-26 unit tests passed inside a container. Integration evidence confirms malformed,
+31 unit and regression tests passed inside a container. Integration evidence confirms malformed,
 injected and toxic inputs produce 422 quarantine records without increasing the
 run count; all three routes, verification retry, verifier outage, provider outage,
 breaker-open fallback, feedback persistence and rate-limit 429 were exercised.

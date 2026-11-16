@@ -2,7 +2,8 @@
   "summary": {
     "v1": {
       "scenarios": 28,
-      "accuracy": 0.21428571428571427,
+      "accuracy": 0.8214285714285714,
+      "verification_rejections": 10,
       "groundedness": 1.0,
       "context_relevance": 0.32007228746154864,
       "faithfulness": 1.0,
@@ -10,7 +11,8 @@
     },
     "v2": {
       "scenarios": 28,
-      "accuracy": 0.25,
+      "accuracy": 1.0,
+      "verification_rejections": 0,
       "groundedness": 1.0,
       "context_relevance": 0.32007228746154864,
       "faithfulness": 1.0,
